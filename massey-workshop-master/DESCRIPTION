@@ -1,0 +1,17 @@
+Package: placeholder
+Type: Book
+Title: Prioritizr Workshop Manual
+Version: 0.0.1
+biocViews:
+Imports:
+  bookdown,
+  dplyr,
+  rgdal,
+  prioritizr,
+  prioritizrdata,
+  units,
+  scales,
+  lpsymphony,
+  gridExtra
+Remotes:
+  rstudio/bookdown
