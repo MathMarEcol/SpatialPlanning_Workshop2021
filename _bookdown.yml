@@ -1,0 +1,5 @@
+book_filename: "SpatialPlanning_Workshop2021"
+delete_merged_file: false
+language:
+  ui:
+    chapter_name: "Chapter "
