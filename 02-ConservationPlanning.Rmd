@@ -1,5 +1,14 @@
 # Overview of the conservation planning problem
 
+```{r, include = FALSE}
+h = 3.5
+w = 3.5
+is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
+                                                  "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
+knitr::opts_chunk$set(fig.align = "center", eval = !is_check,
+                      root.dir = normalizePath("../.."))
+```
+
 Systematic conservation planning is widely considered “good practice” because it facilitates a transparent, inclusive and defensible planning process. In addition it embodies fundamental planning principles: 
   
   - *Comprehensiveness* : a reserve system that contains every feature of biodiversity interest that occurs within a particular region
@@ -12,12 +21,12 @@ Systematic conservation planning is widely considered “good practice” becaus
 
 Systematic conservation planning is a formal method for identifying potential areas for conservation management that will most efficiently achieve a specific set of *objectives*, commonly some minimum representation of biodiversity (Marxan Good Practices Handbook 2013).
 
-## Prioritizr / Marxan
 
-`Prioritizr / Marxan` : software that delivers decision support for reserve system design
 
-- `Marxan /` : a software that uses stochastic optimisation routines (simulated annealing) to aid systematic reserve design on conservation planning
-- r`Prioritizr /` : an R package that uses integer linear programming (ILP) techniques to provide a flexible interface for building and solving conservation planning problems
+
+
+
+
 
 ### Algorithm vs Problem
 
@@ -61,20 +70,12 @@ The `Prioritizr` minimum set objective seeks to find the set of planning units t
 **See the next video**
   <iframe width = "800" height = "500" src = "https://www.youtube.com/embed/1IDeKJJO7s8" frameborder = "0" allowfullscreen></iframe>
   
-  
-  
-```{r, include = FALSE}
-h = 3.5
-w = 3.5
-is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
-                                                  "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
-knitr::opts_chunk$set(fig.align = "center", eval = !is_check,
-                      root.dir = normalizePath("../.."))
-```
 
 ## Summary
 
-The _prioritizr R_ package uses integer linear programming (ILP) techniques to provide a flexible interface for building and solving conservation planning problems [@r11; @r16]. It supports a broad range of objectives, constraints, and penalties that can be used to custom-tailor conservation planning problems to the specific needs of a conservation planning exercise. Once built, conservation planning problems can be solved using a variety of commercial and open-source exact algorithm solvers. In contrast to the algorithms conventionally used to solve conservation problems, such as heuristics or simulated annealing [@r3], the exact algorithms used here are guaranteed to find optimal solutions. Furthermore, conservation problems can be constructed to optimize the spatial allocation of different management zone (or actions), meaning that conservation practitioners can identify solutions that benefit multiple stakeholders. Finally, this package has the functionality to read input data formatted for the _Marxan_ conservation planning program [@r3], and find much cheaper solutions in a much shorter period of time than _Marxan_ [@r1].
+The _prioritizr R_ package uses integer linear programming (ILP) techniques to provide a flexible interface for building and solving conservation planning problems [@r11; @r16]. It supports a broad range of objectives, constraints, and penalties that can be used to custom-tailor conservation planning problems to the specific needs of a conservation planning exercise. 
+
+Once built, conservation planning problems can be solved using a variety of commercial and open-source exact algorithm solvers. In contrast to the algorithms conventionally used to solve conservation problems, such as heuristics or simulated annealing [@r3], the exact algorithms used here are guaranteed to find optimal solutions. Furthermore, conservation problems can be constructed to optimize the spatial allocation of different management zone (or actions), meaning that conservation practitioners can identify solutions that benefit multiple stakeholders. 
 
 ## Introduction
 
