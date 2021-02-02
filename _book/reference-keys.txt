@@ -1,9 +1,14 @@
 welcome
-course-preparation
 setup
 r
 rstudio
 r-packages
+optimisation-software
+obtaining-a-license
+downloading-the-gurobi-software-suite
+software-installation
+license-activation
+local-license-activation
 overview-of-the-conservation-planning-problem
 prioritizr-marxan
 algorithm-vs-problem
@@ -48,4 +53,8 @@ marxan-problems-1
 evaluate-the-performance-of-a-solution-1
 importance-irreplaceability-1
 conclusion-1
-references-1
+tasmania-tutorial
+exploring-the-data
+marxan-problem-formulation
+general-problem-formulation
+selection-frequencies
