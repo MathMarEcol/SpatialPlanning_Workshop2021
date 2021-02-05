@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 7 Answers | 2021 UQ Spatial Planning Workshop using Prioritizr</title>
+<meta name="author" content="Jason D. Everett, Isaac Brito-Morales">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.6/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4.9001/tabs.js"></script><script src="libs/bs3compat-0.2.4.9001/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">2021 UQ Spatial Planning Workshop using Prioritizr</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Welcome!</a></li>
+<li><a class="" href="setup.html"><span class="header-section-number">2</span> Setting up your computer</a></li>
+<li><a class="" href="overview-of-the-conservation-planning-problem.html"><span class="header-section-number">3</span> Overview of the conservation planning problem</a></li>
+<li><a class="" href="getting-started-with-prioritizr.html"><span class="header-section-number">4</span> Getting Started with Prioritizr</a></li>
+<li><a class="" href="data.html"><span class="header-section-number">5</span> Data</a></li>
+<li><a class="" href="spatial-prioritizations.html"><span class="header-section-number">6</span> Spatial prioritizations</a></li>
+<li><a class="active" href="answers.html"><span class="header-section-number">7</span> Answers</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="answers" class="section level1" number="7">
+<h1>
+<span class="header-section-number">7</span> Answers<a class="anchor" aria-label="anchor" href="#answers"><i class="fas fa-link"></i></a>
+</h1>
+<p>This chapter contains the answers to the questions presented in the earlier chapters. The answers are provided here so you can check if your answers are correct.</p>
+<div id="redo-marxan-analysis" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> Redo Marxan analysis<a class="anchor" aria-label="anchor" href="#redo-marxan-analysis"><i class="fas fa-link"></i></a>
+</h2>
+<div id="base-analysis-on-input.dat" class="section level3" number="7.1.1">
+<h3>
+<span class="header-section-number">7.1.1</span> Base analysis on input.dat<a class="anchor" aria-label="anchor" href="#base-analysis-on-input.dat"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>Subjective.</li>
+<li>I would say, the most obvious differences are in the bottom left corner, where the Marxan results are rather diffuse and selection frequencies are low. This is actually a very good example of some ‘issues’ people have described with prioritizr. Its essentially related to a problem not having enough feature and cost heterogeneity for a decision support tool such as Marxan or prioritzr to find reasonable solutions.</li>
+<li>Heterogenous cost structures help. So do features that are more complex or have more overlap with each other.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="data-1" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> Data<a class="anchor" aria-label="anchor" href="#data-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="planning-unit-data-1" class="section level3" number="7.2.1">
+<h3>
+<span class="header-section-number">7.2.1</span> Planning unit data<a class="anchor" aria-label="anchor" href="#planning-unit-data-1"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code><a href="https://prioritizr.net/reference/OptimizationProblem-methods.html">nrow(pu_data)</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/Extremes.html">max(pu_data$cost)</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/sum.html">sum(pu_data$locked_in)</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/mean.html">mean(pu_data$locked_in)</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/sum.html">sum(pu_data$locked_out)</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/mean.html">mean(pu_data$locked_out)</a></code></li>
+<li>
+<code><a href="https://rdrr.io/pkg/assertthat/man/assert_that.html">assert_that(min(c(pu_data$locked_in, pu_data$locked_out)) == 0)</a></code>
+<code><a href="https://rdrr.io/pkg/assertthat/man/assert_that.html">assert_that(max(c(pu_data$locked_in, pu_data$locked_out)) == 1)</a></code>
+</li>
+<li><code><a href="https://rdrr.io/r/base/all.html">all(is.finite(pu_data$cost))</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/assertthat/man/assert_that.html">assert_that(sum(duplicated(pu_data$id)) == 0)</a></code></li>
+<li>Yes, the eastern side of Tasmania is generally much cheaper than the western side.</li>
+<li>Yes, most planning units covered by protected areas are located in the south-western side of Tasmania.</li>
+</ol>
+</div>
+</div>
+<div id="vegetation-data-1" class="section level3" number="7.2.2">
+<h3>
+<span class="header-section-number">7.2.2</span> Vegetation data<a class="anchor" aria-label="anchor" href="#vegetation-data-1"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>Central-north Tasmania</li>
+<li><code><a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats(veg_data[[12]], "mean")</a></code></li>
+<li><code>names(veg_data)[which.max(cellStats(veg_data, "sum"))]</code></li>
+<li>Yes, they are the same.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="spatial-prioritizations-1" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">7.3</span> Spatial prioritizations<a class="anchor" aria-label="anchor" href="#spatial-prioritizations-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="starting-out-simple-1" class="section level3" number="7.3.1">
+<h3>
+<span class="header-section-number">7.3.1</span> Starting out simple<a class="anchor" aria-label="anchor" href="#starting-out-simple-1"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s1$solution_1)</a></code> 
+<code><a href="https://rdrr.io/r/base/mean.html">mean(s1$solution_1)</a></code>
+</li>
+<li>Yes, the planning units are generally spread out across most of the study area and they are not biased towards specific areas.</li>
+<li><code><a href="https://rdrr.io/r/base/all.html">all(feature_representation(p1, s1[, "solution_1"])$relative_held &gt;= 0.2)</a></code></li>
+</ol>
+</div>
+</div>
+<div id="adding-complexity-1" class="section level3" number="7.3.2">
+<h3>
+<span class="header-section-number">7.3.2</span> Adding complexity<a class="anchor" aria-label="anchor" href="#adding-complexity-1"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s2$cost * s2$solution_1)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s3$cost * s3$solution_1)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s4$cost * s4$solution_1)</a></code>
+</li>
+<li>
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s2$solution_1)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s3$solution_1)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s4$solution_1)</a></code>
+</li>
+<li>No, just because a solution a solution has more planning units does not mean that it will cost less.</li>
+<li>This is because the planning units covered by existing protected areas have a non-zero cost and locking in these planning units introduces inefficiencies into the solution. This is very common in real-world conservation prioritizations because existing protected areas are often in places that do little to benefit biodiversity <span class="citation">(<a href="references.html#ref-r3" role="doc-biblioref">Ball <em>et al.</em> 2009</a>)</span>.</li>
+<li>This is because some of the planning units that are highly degraded—based on just the planning unit costs and vegetation data—provide cost-efficient opportunities for meeting the targets and excluding them from the reserve selection process means that other more costly planning units are needed to meet the targets.</li>
+<li><code>sum(s4$cost * s4$solution_1) - sum(s4$cost * s4$locked_in)</code></li>
+<li>We get an error message stating the the problem is infeasible because there is no valid solution—even if we selected all the planning units the study area we would still not meet the targets.</li>
+</ol>
+</div>
+</div>
+<div id="penalizing-fragmentation-1" class="section level3" number="7.3.3">
+<h3>
+<span class="header-section-number">7.3.3</span> Penalizing fragmentation<a class="anchor" aria-label="anchor" href="#penalizing-fragmentation-1"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>The cost of the fourth solution is <code><a href="https://rdrr.io/r/base/sum.html">sum(s4$solution_1 * s4$cost)</a></code> and the cost of the fifth solution is <code><a href="https://rdrr.io/r/base/sum.html">sum(s5$solution_1 * s5$cost)</a></code>. The fifth solution (<code>s5</code>) costs more than the fourth solution (<code>s4</code>) because we have added penalties to the conservation planning problem to indicate that we are willing to accept a slightly more costly solution if it means that we can reduce fragmentation.</li>
+<li>The solution is now nearly identical to the fourth solution (<code>s4</code>) and so has nearly the same cost. This penalty value is too low and is not useful because it does not reduce the fragmentation in our solution.</li>
+<li>The solution now contains a lot of extra planning units that are not needed to meet our targets. In fact, nearly every planning unit in the study is now selected. This penalty value is too high and is not useful.</li>
+</ol>
+</div>
+</div>
+<div id="budget-limited-prioritizations-1" class="section level3" number="7.3.4">
+<h3>
+<span class="header-section-number">7.3.4</span> Budget limited prioritizations<a class="anchor" aria-label="anchor" href="#budget-limited-prioritizations-1"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li><code>names(veg_data)[which.min(wts)]</code></li>
+<li>
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s6$cost * s6$solution_1)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s7$cost * s7$solution_1)</a></code>
+</li>
+<li>No, the sixth (<code>s6</code>) and seventh (<code>s7</code>) solutions both share many of the same selected planning units and there does not appear to be an obvious difference in the spatial location of the planning units which they do not share.</li>
+<li>Yes. Both solutions contain adequately represent these features: 
+<code>r6$feature[r6$relative_held &gt; 0.2 &amp; r7$relative_held &gt; 0.2]</code> 
+The sixth (<code>s6</code>) is adequately represents these features too: 
+<code>r6$feature[r6$relative_held &gt; 0.2 &amp; !r7$relative_held &gt; 0.2]</code> 
+The seventh (<code>s7</code>) is adequately represents these features too: 
+<code>r7$feature[r7$relative_held &gt; 0.2 &amp; !r6$relative_held &gt; 0.2]</code>
+</li>
+</ol>
+</div>
+</div>
+<div id="solution-portfolios-1" class="section level3" number="7.3.5">
+<h3>
+<span class="header-section-number">7.3.5</span> Solution portfolios<a class="anchor" aria-label="anchor" href="#solution-portfolios-1"><i class="fas fa-link"></i></a>
+</h3>
+
+<div class="rmdanswer">
+<ol style="list-style-type: decimal">
+<li>No the cost are very similar. 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s8$solution_1 * s8$cost)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s8$solution_2 * s8$cost)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s8$solution_3 * s8$cost)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s8$solution_4 * s8$cost)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s8$solution_5 * s8$cost)</a></code> 
+<code><a href="https://rdrr.io/r/base/sum.html">sum(s8$solution_6 * s8$cost)</a></code>
+</li>
+<li>No the status of the planning units are very similar in the all of the solutions in the portfolio. 
+<code><a href="https://rdrr.io/r/base/mean.html">mean((s8$solution_1 == s8$solution_2) &amp; (s8$solution_1 == s8$solution_3) &amp;     (s8$solution_1 == s8$solution_4) &amp; (s8$solution_1 == s8$solution_5) &amp;     (s8$solution_1 == s8$solution_6))</a></code>
+</li>
+<li>We should increase the number of the solutions in the portfolio.</li>
+</ol>
+</div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="spatial-prioritizations.html"><span class="header-section-number">6</span> Spatial prioritizations</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#answers"><span class="header-section-number">7</span> Answers</a></li>
+<li>
+<a class="nav-link" href="#redo-marxan-analysis"><span class="header-section-number">7.1</span> Redo Marxan analysis</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#base-analysis-on-input.dat"><span class="header-section-number">7.1.1</span> Base analysis on input.dat</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#data-1"><span class="header-section-number">7.2</span> Data</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#planning-unit-data-1"><span class="header-section-number">7.2.1</span> Planning unit data</a></li>
+<li><a class="nav-link" href="#vegetation-data-1"><span class="header-section-number">7.2.2</span> Vegetation data</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#spatial-prioritizations-1"><span class="header-section-number">7.3</span> Spatial prioritizations</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#starting-out-simple-1"><span class="header-section-number">7.3.1</span> Starting out simple</a></li>
+<li><a class="nav-link" href="#adding-complexity-1"><span class="header-section-number">7.3.2</span> Adding complexity</a></li>
+<li><a class="nav-link" href="#penalizing-fragmentation-1"><span class="header-section-number">7.3.3</span> Penalizing fragmentation</a></li>
+<li><a class="nav-link" href="#budget-limited-prioritizations-1"><span class="header-section-number">7.3.4</span> Budget limited prioritizations</a></li>
+<li><a class="nav-link" href="#solution-portfolios-1"><span class="header-section-number">7.3.5</span> Solution portfolios</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>2021 UQ Spatial Planning Workshop using Prioritizr</strong>" was written by Jason D. Everett, Isaac Brito-Morales. It was last built on 2021-02-05.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>

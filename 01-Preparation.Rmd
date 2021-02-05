@@ -28,6 +28,12 @@ install.packages(c("sf", "dplyr", "sp", "rgeos", "rgdal", "raster",
 BiocManager::install("lpsymphony")
 ```
 
+Some of the new code in this workshop relies on _prioritizr R_ package v6.0 which is only available on Github at the moment. The CRAN version is currently 5.03. To install v6.0 you can run:
+```{r, eval = FALSE}
+devtools::install_github("prioritizr/prioritizr")
+```
+
+
 ## Optimisation Software
 
 _Gurobi_ is the most powerful and fastest solver that the _prioritizr R_ package can use to solve conservation planning problems. This vignette will walk you through the process of setting up _Gurobi_ on your computer so that you can use it to solve conservation planning problems. If you encounter any problems while following the instructions below, check out the [official _Gurobi_ documentation](https://www.gurobi.com/documentation/).
@@ -63,3 +69,16 @@ Now we will activate the _Gurobi_ software using the license you downloaded earl
 To activate the license, simply copy and paste the `grbgetkey` command into your computer's command prompt or terminal (note that Windows users can open the command prompt by typing `cmd` in the search box and pressing the `enter` key). After running the `grbgetkey` command with the correct license code, you should see output that looks something like that in the screen shot below.
 
 <br><center>![](images/cmd-windows-success.png){ width=75% }</center><br>
+
+### Install gurobi R
+To install the R package, instructions can be found [here](https://www.gurobi.com/documentation/9.1/refman/ins_the_r_package.html). Briefly you can install it by substituting `<R-package-file>` in the code below for the location of the Gurobi software on your computer.
+```{r, eval=FALSE}
+install.packages('<R-package-file>', repos=NULL)
+
+# For a Mac it would be:
+install.packages("/Library/gurobi911/mac64/R/gurobi_9.1-1_R_4.0.2.tgz", repos = NULL)
+```
+Depending on your local R environment you might need to install the R package slam. To do this, you should issue the following command within R:
+```{r, eval=FALSE}
+install.packages('slam')
+```
