@@ -33,12 +33,6 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Welcome!</a></li>
 <li><a class="active" href="setup.html"><span class="header-section-number">2</span> Setting up your computer</a></li>
-<li><a class="" href="overview-of-the-conservation-planning-problem.html"><span class="header-section-number">3</span> Overview of the conservation planning problem</a></li>
-<li><a class="" href="getting-started-with-prioritizr.html"><span class="header-section-number">4</span> Getting Started with Prioritizr</a></li>
-<li><a class="" href="data.html"><span class="header-section-number">5</span> Data</a></li>
-<li><a class="" href="spatial-prioritizations.html"><span class="header-section-number">6</span> Spatial prioritizations</a></li>
-<li><a class="" href="answers.html"><span class="header-section-number">7</span> Answers</a></li>
-<li><a class="" href="references.html">References</a></li>
 </ul>
 
         <div class="book-extra">
@@ -50,7 +44,7 @@
 <h1>
 <span class="header-section-number">2</span> Setting up your computer<a class="anchor" aria-label="anchor" href="#setup"><i class="fas fa-link"></i></a>
 </h1>
-<p>You will need to have both R and RStudio installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, <strong>you will need the latest version of R installed (i.e. version 4.0.3)</strong>. Please note that you might need administrative permissions to install these programs. After installing them, you will also need to install some R packages too. Finally, you will also need to download the data for this workshop.</p>
+<p>You will need to have both R and RStudio installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, <strong>you will need the at least version 4.0 of R installed </strong>. Please note that you might need administrative permissions to install these programs. After installing them, you will also need to install some R packages too. Finally, you will also need to download the data for this workshop.</p>
 <div id="r" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> R<a class="anchor" aria-label="anchor" href="#r"><i class="fas fa-link"></i></a>
@@ -70,21 +64,22 @@
 <span class="header-section-number">2.3</span> R packages<a class="anchor" aria-label="anchor" href="#r-packages"><i class="fas fa-link"></i></a>
 </h2>
 <p>An R package is a collection of R code and documentation that can be installed to enhance the standard R environment with additional functionality. Currently, there are over fifteen thousand R packages available on CRAN. Each of these R packages are developed to perform a specific task, such as <a href="https://cran.r-project.org/web/packages/readxl/index.html">reading Excel spreadsheets</a>, <a href="https://cran.r-project.org/web/packages/MODIStsp/index.html">downloading satellite imagery data</a>, <a href="https://cran.r-project.org/web/packages/wdpar/index.html">downloading and cleaning protected area data</a>, or <a href="https://cran.r-project.org/web/packages/ENMeval/index.html">fitting environmental niche models</a>. In fact, R has such a diverse ecosystem of R packages, that the question is almost always not “can I use R to …?” but “what R package can I use to …?”. During this workshop, we will use several R packages. To install these R packages, please enter the code below in the <em>Console</em> part of the RStudio interface and press enter. Note that you will require an Internet connection and the installation process may take some time to complete.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sf"</span>, <span class="st">"dplyr"</span>, <span class="st">"sp"</span>, <span class="st">"rgeos"</span>, <span class="st">"rgdal"</span>, <span class="st">"raster"</span>,
                    <span class="st">"units"</span>, <span class="st">"prioritizr"</span>, <span class="st">"prioritizrdata"</span>, <span class="st">"Rsymphony"</span>,
                    <span class="st">"mapview"</span>, <span class="st">"assertthat"</span>, <span class="st">"remotes"</span>, <span class="st">"gridExtra"</span>,
                    <span class="st">"BiocManager"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"lpsymphony"</span><span class="op">)</span></code></pre></div>
-<p>Some of the new code in this workshop relies on <em>prioritizr R</em> package v6.0 which is only available on Github at the moment. The CRAN version is currently 5.03. To install v6.0 you can run:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>Some of the new code in this workshop relies on <em>prioritizr R</em> package v6.0 which is only available on Github at the moment. The CRAN version is currently 5.03. You do not have to install v6.0 if you don’t wish to. There are only a few instances of code which will not be able to run. But if you want to try v6.0 you can run:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"prioritizr/prioritizr"</span><span class="op">)</span></code></pre></div>
+<p>This will require you to have all the tools required for building packages installed on your computer but RStudio should help with the process and you can get help from here: <a href="https://support.rstudio.com/hc/en-us/articles/200486498-Package-Development-Prerequisites" class="uri">https://support.rstudio.com/hc/en-us/articles/200486498-Package-Development-Prerequisites</a>.</p>
 </div>
 <div id="optimisation-software" class="section level2" number="2.4">
 <h2>
 <span class="header-section-number">2.4</span> Optimisation Software<a class="anchor" aria-label="anchor" href="#optimisation-software"><i class="fas fa-link"></i></a>
 </h2>
-<p><em>Gurobi</em> is the most powerful and fastest solver that the <em>prioritizr R</em> package can use to solve conservation planning problems. This vignette will walk you through the process of setting up <em>Gurobi</em> on your computer so that you can use it to solve conservation planning problems. If you encounter any problems while following the instructions below, check out the <a href="https://www.gurobi.com/documentation/">official <em>Gurobi</em> documentation</a>.</p>
+<p>While it possible to use the <code>lpsymphony</code> package installed above, <em>Gurobi</em> is the most powerful and fastest solver that the <em>prioritizr R</em> package can use to solve conservation planning problems. This section will walk you through the process of setting up <em>Gurobi</em> on your computer. If you encounter any problems while following the instructions below, check out the <a href="https://www.gurobi.com/documentation/">official <em>Gurobi</em> documentation</a>. If you can’t solve the problems, don’t worry. We can use <code>lpsymphony</code>.</p>
 <div id="obtaining-a-license" class="section level3" number="2.4.1">
 <h3>
 <span class="header-section-number">2.4.1</span> Obtaining a license<a class="anchor" aria-label="anchor" href="#obtaining-a-license"><i class="fas fa-link"></i></a>
@@ -135,13 +130,13 @@
 <span class="header-section-number">2.4.6</span> Install gurobi R<a class="anchor" aria-label="anchor" href="#install-gurobi-r"><i class="fas fa-link"></i></a>
 </h3>
 <p>To install the R package, instructions can be found <a href="https://www.gurobi.com/documentation/9.1/refman/ins_the_r_package.html">here</a>. Briefly you can install it by substituting <code>&lt;R-package-file&gt;</code> in the code below for the location of the Gurobi software on your computer.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'&lt;R-package-file&gt;'</span>, repos<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span>
 
 <span class="co"># For a Mac it would be:</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"/Library/gurobi911/mac64/R/gurobi_9.1-1_R_4.0.2.tgz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 <p>Depending on your local R environment you might need to install the R package slam. To do this, you should issue the following command within R:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'slam'</span><span class="op">)</span></code></pre></div>
 
 </div>
@@ -149,7 +144,7 @@
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="index.html"><span class="header-section-number">1</span> Welcome!</a></div>
-<div class="next"><a href="overview-of-the-conservation-planning-problem.html"><span class="header-section-number">3</span> Overview of the conservation planning problem</a></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -183,7 +178,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>2021 UQ Spatial Planning Workshop using Prioritizr</strong>" was written by Jason D. Everett, Isaac Brito-Morales. It was last built on 2021-02-05.</p>
+    <p>"<strong>2021 UQ Spatial Planning Workshop using Prioritizr</strong>" was written by Jason D. Everett, Isaac Brito-Morales. It was last built on 2021-02-08.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -191,18 +186,6 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
+</footer>
 </body>
 </html>

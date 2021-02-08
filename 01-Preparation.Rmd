@@ -1,6 +1,6 @@
 # Setting up your computer {#setup}
 
-You will need to have both R and RStudio installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, **you will need the latest version of R installed (i.e. version `r as.character(getRversion())`)**. Please note that you might need administrative permissions to install these programs. After installing them, you will also need to install some R packages too. Finally, you will also need to download the data for this workshop.
+You will need to have both R and RStudio installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, **you will need the at least version 4.0 of R installed **. Please note that you might need administrative permissions to install these programs. After installing them, you will also need to install some R packages too. Finally, you will also need to download the data for this workshop.
 
 ## R {#r}
 
@@ -28,15 +28,15 @@ install.packages(c("sf", "dplyr", "sp", "rgeos", "rgdal", "raster",
 BiocManager::install("lpsymphony")
 ```
 
-Some of the new code in this workshop relies on _prioritizr R_ package v6.0 which is only available on Github at the moment. The CRAN version is currently 5.03. To install v6.0 you can run:
+Some of the new code in this workshop relies on _prioritizr R_ package v6.0 which is only available on Github at the moment. The CRAN version is currently 5.03. You do not have to install v6.0 if you don't wish to. There are only a few instances of code which will not be able to run. But if you want to try v6.0 you can run:
 ```{r, eval = FALSE}
 devtools::install_github("prioritizr/prioritizr")
 ```
 
+This will require you to have all the tools required for building packages installed on your computer but RStudio should help with the process and you can get help from here: https://support.rstudio.com/hc/en-us/articles/200486498-Package-Development-Prerequisites.
 
 ## Optimisation Software
-
-_Gurobi_ is the most powerful and fastest solver that the _prioritizr R_ package can use to solve conservation planning problems. This vignette will walk you through the process of setting up _Gurobi_ on your computer so that you can use it to solve conservation planning problems. If you encounter any problems while following the instructions below, check out the [official _Gurobi_ documentation](https://www.gurobi.com/documentation/).
+While it possible to use the `lpsymphony` package installed above, _Gurobi_ is the most powerful and fastest solver that the _prioritizr R_ package can use to solve conservation planning problems. This section will walk you through the process of setting up _Gurobi_ on your computer. If you encounter any problems while following the instructions below, check out the [official _Gurobi_ documentation](https://www.gurobi.com/documentation/). If you can't solve the problems, don't worry. We can use `lpsymphony`.
 
 ### Obtaining a license
 

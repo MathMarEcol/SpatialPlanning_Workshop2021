@@ -8,9 +8,9 @@ bibliography: references.bib
 csl: reference-style.csl
 biblio-style: apalike
 link-citations: yes
-description: "These are the notes for the 2021 UQ Spatial Planning Workshop using Prioritizr."
-#url: 'https\://prioritizr.github.io/massey-workshop'
-# github-repo: prioritizr/massey-workshop
+description: "Notes for the 2021 UQ Spatial Planning Workshop using Prioritizr."
+url: "https://mathmarecol.github.io/SpatialPlanning_Workshop2021/"
+github-repo: MathMarEcol/SpatialPlanning_Workshop2021
 fontsize: 12pt
 urlcolor: blue
 geometry: "left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm"
@@ -20,7 +20,7 @@ geometry: "left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm"
 
 The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with developing prioritizations. In other words, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.
 
-```{r eval=FALSE}
+```{r eval=FALSE, include=FALSE}
 install.packages("bookdown")
 # or the development version
 # devtools::install_github("rstudio/bookdown")

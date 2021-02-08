@@ -1,4 +1,4 @@
-# Data {#data}
+# Spatial Data {#data}
 
 ```{r, out.width = "70%", echo = FALSE}
 knitr::include_graphics("images/rstudio-wd.png")
@@ -6,13 +6,12 @@ knitr::include_graphics("images/rstudio-wd.png")
 
 \clearpage
 
-The aim of this tutorial is to provide a worked example of how vector-based data can be used to develop conservation prioritizations using the _prioritizr R_ package. It is also written for conservation planners that have used the _Marxan_ decision support tool [@r3] and are interested in applying the _prioritizr R_ package to their own work. The dataset used in this tutorial was obtained from the _Introduction to Marxan_ course. This data was originally a subset of a larger spatial prioritization project performed under contract to Australia's Department of Environment and Water Resources [@r30].
+The aim of this tutorial is to provide a worked example of how vector-based data can be used to develop conservation prioritizations using the _prioritizr R_ package. The dataset used in this tutorial was originally a subset of a larger spatial prioritization project performed under contract to Australia's Department of Environment and Water Resources [@r30].
 
-Please note that this tutorial uses data from the _prioritizrdata R_, so ensure that it is installed before trying out the code yourself.
+This dataset contains two items.     
+* First, a spatial planning unit layer that has an attribute table which contains three columns: integer unique identifiers ("id"), unimproved land values ("cost"), and their existing level of protection ("status"). Units with 50 % or more of their area contained in protected areas are associated with a status of 2, otherwise they are associated with a value of 0. If you are familiar with the _Marxan_ decision support tool, then you will notice that these columns are formatted in a similar manner to the input data for _Marxan_. For _Marxan_ input data, planning units must be described in a table containing one row for each planning unit with a unique identifier and the corresponding cost.     
 
-This dataset contains two items. First, a spatial planning unit layer that has an attribute table which contains three columns: integer unique identifiers ("id"), unimproved land values ("cost"), and their existing level of protection ("status"). Units with 50 % or more of their area contained in protected areas are associated with a status of 2, otherwise they are associated with a value of 0. If you are familiar with the _Marxan_ decision support tool, then you will notice that these columns are formatted in a similar manner to the input data for _Marxan_. For _Marxan_ input data, planning units must be described in a table containing one row for each planning unit with a unique identifier and the corresponding cost.
-
-The second item in this dataset is the raster-based feature data. Specifically, the feature data is expressed as a stack of rasters (termed a `RasterStack` object). Here each layer in the stack represents the distribution of a different vegetation class in Tasmania, Australia. There are 62 vegetation classes in total. For a given layer, pixel values indicate the presence (value of 1) or absence (value of 0) of the vegetation class in an area.
+* The second item in this dataset is the raster-based feature data. Specifically, the feature data is expressed as a stack of rasters (termed a `RasterStack` object). Here each layer in the stack represents the distribution of a different vegetation class in Tasmania, Australia. There are 62 vegetation classes in total. For a given layer, pixel values indicate the presence (value of 1) or absence (value of 0) of the vegetation class in an area.
 
 First, load the required packages and the data.
 
@@ -34,12 +33,11 @@ library(gridExtra)
 library(dplyr)
 ```
 
-```{r}
+```{r, warning = FALSE}
 # load planning unit data
 # data(tas_pu) # SpatialPolygonsDataFrame # If raw, use readOGR(filename)
 # load conservation feature data
 # data(tas_features) # RasterStack # If raw, use stack(filename)
-
 
 albers <- "+proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 # utm <- "+proj=utm +zone=55 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"
@@ -88,7 +86,7 @@ The planning unit data contains spatial data describing the geometry for each pl
 * `locked_in`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units are covered by protected areas or not.
 * `locked_out`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units cannot be managed as a protected area because they contain are too degraded.
 
-```{r}
+```{r, warning = FALSE}
 # print a short summary of the data
 print(tas_pu)
 
@@ -96,12 +94,8 @@ print(tas_pu)
 plot(tas_pu)
 ```
 
-```{r, eval = FALSE}
-# plot an interactive map of the planning unit data
-mapview(tas_pu)
-```
 
-```{r, out.width = "60%"}
+```{r, out.width = "60%", warning = FALSE}
 # print the structure of object
 str(tas_pu, max.level = 2)
 
@@ -139,14 +133,14 @@ mean(tas_pu$cost)
 spplot(tas_pu, "cost")
 ```
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, warning = FALSE}
 # plot an interactive map of the planning unit cost data
 mapview(tas_pu, zcol = "cost")
 ```
 
 Now, you can try and answer some questions about the planning unit data.
 
-```{block2, type="rmdquestion"}
+```{block2, type="rmdquestion", warning = FALSE}
 1. How many planning units are in the planning unit data?
 2. What is the highest cost value?
 3. How many planning units are covered by the protected areas (hint: `sum(x)`)?
@@ -171,7 +165,7 @@ The vegetation data describes the spatial distribution of 62 vegetation classes 
 
 Let's explore the vegetation data.
 
-```{r}
+```{r, warning = FALSE}
 # print a short summary of the data
 print(tas_features)
 
@@ -179,12 +173,12 @@ print(tas_features)
 plot(tas_features[[36]])
 ```
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, warning = FALSE}
 # plot an interactive map of the 36th vegetation class
 mapview(tas_features[[36]])
 ```
 
-```{r}
+```{r, warning = FALSE}
 # print number of rows in the data
 nrow(tas_features)
 
@@ -241,7 +235,7 @@ as_tibble(data.frame(max = cellStats(tas_features, "max")))
 
 Now, you can try and answer some questions about the vegetation data.
 
-```{block2, type="rmdquestion"}
+```{block2, type="rmdquestion", warning = FALSE}
 1. What part of the study area is the 51st vegetation class found in (hint: make a map)?
 2. What proportion of cells contain the 12th vegetation class?
 3. Which vegetation class is present in the greatest number of cells?
@@ -249,6 +243,6 @@ Now, you can try and answer some questions about the vegetation data.
 
 ```
 
-```{r, include = FALSE}
+```{r, include = FALSE, warning = FALSE}
 sum_tas_features <- sum(tas_features)
 ```
