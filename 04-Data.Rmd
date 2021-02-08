@@ -1,0 +1,232 @@
+# Spatial Data {#data}
+
+The aim of this tutorial is to provide a worked example of how vector-based data can be used to develop conservation prioritizations using the _prioritizr R_ package. The dataset used in this tutorial was originally a subset of a larger spatial prioritization project performed under contract to Australia's Department of Environment and Water Resources [@r30].
+
+This dataset contains two items.     
+* First, a spatial planning unit layer that has an attribute table which contains three columns: integer unique identifiers ("id"), unimproved land values ("cost"), and their existing level of protection ("status"). Units with 50 % or more of their area contained in protected areas are associated with a status of 2, otherwise they are associated with a value of 0. 
+
+* The second item in this dataset is the raster-based feature data. Specifically, the feature data is expressed as a stack of rasters (termed a `RasterStack` object). Here each layer in the stack represents the distribution of a different vegetation class in Tasmania, Australia. There are 62 vegetation classes in total. For a given layer, pixel values indicate the presence (value of 1) or absence (value of 0) of the vegetation class in an area.
+
+First, load the required packages and the data.
+
+## Data import
+
+```{r, message = FALSE, warning = FALSE}
+# load packages
+library(prioritizr)
+library(prioritizrdata)
+library(sf)
+library(rgdal)
+library(raster)
+library(rgeos)
+library(mapview)
+library(units)
+library(scales)
+library(assertthat)
+library(gridExtra)
+library(dplyr)
+```
+
+```{r, warning = FALSE}
+## Some of this data is built in to the Prioritizr package, but it is lower resolution so we use that in the data/ folder.
+# load planning unit data
+# data(tas_pu) # SpatialPolygonsDataFrame # If raw, use readOGR(filename)
+
+# load conservation feature data
+# data(tas_features) # RasterStack # If raw, use stack(filename)
+
+albers <- "+proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+
+tas_pu <- readOGR("data/pu.shp")
+tas_features <- stack("data/vegetation.tif")
+proj4string(tas_pu) <- albers # There is a problem with projectio so we re-add it here
+proj4string(tas_features) <- albers # There is a problem with projectio so we re-add it here
+
+tas_pu$locked_out[1:500] <- FALSE # There is a problem later on so we remove some of the locked out areas to improve chance of a solution
+tas_pu$locked_in <- as.logical(tas_pu$locked_in) # Convert to logical
+tas_pu$locked_out <- as.logical(tas_pu$locked_out) # Convert to logical
+
+# A function to plot the solution. 
+plot_solution <- function(s){
+  s$solution_1 <- factor(s$solution_1)
+  plot(st_as_sf(s[, "solution_1"]), pal = c("grey90", "darkgreen"), main = "Solution 1")
+}
+
+```
+
+\clearpage
+
+## Planning unit data
+
+The planning unit data contains spatial data describing the geometry for each planning unit and attribute data with information about each planning unit (e.g. cost values). Let's investigate the `tas_pu` object. The attribute data contains `r ncol(tas_pu)` columns with contain the following information:
+
+* `id`: unique identifiers for each planning unit
+* `cost`: acquisition cost values for each planning unit (millions of Australian dollars).
+* `status`: status information for each planning unit (only relevant with Marxan)
+* `locked_in`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units are covered by protected areas or not.
+* `locked_out`: logical values (i.e. `TRUE`/`FALSE`) indicating if planning units cannot be managed as a protected area because they contain are too degraded.
+
+```{r, warning = FALSE}
+# print a short summary of the data
+print(tas_pu)
+
+# plot the planning unit data
+plot(tas_pu)
+```
+
+
+```{r, out.width = "60%", warning = FALSE}
+# print the structure of object
+str(tas_pu, max.level = 2)
+
+# print the class of the object
+class(tas_pu)
+
+# print the slots of the object
+slotNames(tas_pu)
+
+# print the geometry for the 80th planning unit
+tas_pu@polygons[[80]]
+
+# print the coordinate reference system
+print(tas_pu@proj4string)
+
+# print number of planning units (geometries) in the data
+nrow(tas_pu)
+
+# print the first six rows in the attribute data
+head(tas_pu@data)
+
+# print the first six values in the cost column of the attribute data
+head(tas_pu$cost)
+
+# print the highest cost value
+max(tas_pu$cost)
+
+# print the smallest cost value
+min(tas_pu$cost)
+
+# print average cost value
+mean(tas_pu$cost)
+
+# plot a map of the planning unit cost data
+spplot(tas_pu, "cost")
+```
+
+```{r, eval = FALSE, warning = FALSE}
+# plot an interactive map of the planning unit cost data
+mapview(tas_pu, zcol = "cost")
+```
+
+Now, you can try and answer some questions about the planning unit data.
+
+```{block2, type="rmdquestion", warning = FALSE}
+1. How many planning units are in the planning unit data?
+2. What is the highest cost value?
+3. How many planning units are covered by the protected areas (hint: `sum(x)`)?
+4. What is the proportion of the planning units that are covered by the protected areas (hint: `mean(x)`)?
+5. How many planning units are highly degraded (hint: `sum(x)`)?
+6. What is the proportion of planning units are highly degraded (hint: `mean(x)`)?
+7. Can you verify that all values in the `locked_in` and `locked_out` columns are zero or one (hint: `min(x)` and `max(x)`)?.
+8. Can you verify that none of the planning units are missing cost values (hint: `all(is.finite(x))`)?.
+9. Can you very that none of the planning units have duplicated identifiers? (hint: `sum(duplicated(x))`)?
+10. Is there a spatial pattern in the planning unit cost values (hint: use `spplot` to make a map).
+11. Is there a spatial pattern in where most planning units are covered by protected areas (hint: use `spplot` to make a map).
+
+```
+
+\clearpage
+
+## Vegetation data
+
+The vegetation data describes the spatial distribution of 62 vegetation classes in the study area. This data is in a raster format and so the data are organized using a square grid comprising square grid cells that are each the same size. In our case, the raster data contains multiple layers (also called "bands") and each layer corresponds to a spatial grid with exactly the same area and has exactly the same dimensionality (i.e. number of rows, columns, and cells). 
+
+In this dataset, there are 62 different regular spatial grids layered on top of each other -- with each layer corresponding to a different vegetation class -- and each of these layers contains a grid with `r nrow(tas_features)` rows, `r ncol(tas_features)` columns, and `r nrow(tas_features) * ncol(tas_features)` cells.
+
+Within each layer, each cell corresponds to a `r xres(tas_features)/1000` by `r yres(tas_features)/1000` km square. The values associated with each grid cell indicate the (one) presence or (zero) absence of a given vegetation class in the cell.
+
+![](images/rasterbands.png)
+
+Let's explore the vegetation data.
+
+```{r, warning = FALSE}
+# print a short summary of the data
+print(tas_features)
+
+# plot a map of the 36th vegetation class
+plot(tas_features[[36]])
+```
+
+```{r, eval = FALSE, warning = FALSE}
+# plot an interactive map of the 36th vegetation class
+mapview(tas_features[[36]])
+```
+
+```{r, warning = FALSE}
+# print number of rows in the data
+nrow(tas_features)
+
+# print number of columns  in the data
+ncol(tas_features)
+
+# print number of cells in the data
+ncell(tas_features)
+
+# print number of layers in the data
+nlayers(tas_features)
+
+# print  resolution on the x-axis
+xres(tas_features)
+
+# print resolution on the y-axis
+yres(tas_features)
+
+# print spatial extent of the grid, i.e. coordinates for corners
+extent(tas_features)
+
+# print the coordinate reference system
+print(tas_features@crs)
+
+# print a summary of the first layer in the stack
+print(tas_features[[1]])
+
+# print the value in the 800th cell in the first layer of the stack
+print(tas_features[[1]][800])
+
+# print the value of the cell located in the 30th row and the 60th column of
+# the first layer
+print(tas_features[[1]][30, 60])
+
+# calculate the sum of all the cell values in the first layer
+cellStats(tas_features[[1]], "sum")
+
+# calculate the maximum value of all the cell values in the first layer
+cellStats(tas_features[[1]], "max")
+
+# calculate the minimum value of all the cell values in the first layer
+cellStats(tas_features[[1]], "min")
+
+# calculate the mean value of all the cell values in the first layer
+cellStats(tas_features[[1]], "mean")
+```
+
+\clearpage
+
+```{r}
+# calculate the maximum value in each layer
+as_tibble(data.frame(max = cellStats(tas_features, "max")))
+```
+
+Now, you can try and answer some questions about the vegetation data.
+
+```{block2, type="rmdquestion", warning = FALSE}
+1. What part of the study area is the 51st vegetation class found in (hint: make a map)?
+2. What proportion of cells contain the 12th vegetation class?
+3. Which vegetation class is present in the greatest number of cells?
+4. The planning unit data and the vegetation data should have the same coordinate reference system. Can you check if they are the same?
+
+```
+
+```{r, include = FALSE, warning = FALSE}
+sum_tas_features <- sum(tas_features)
+```

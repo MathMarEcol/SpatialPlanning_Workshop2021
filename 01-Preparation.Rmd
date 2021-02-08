@@ -1,6 +1,6 @@
 # Setting up your computer {#setup}
 
-You will need to have both R and RStudio installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, **you will need the at least version 4.0 of R installed **. Please note that you might need administrative permissions to install these programs. After installing them, you will also need to install some R packages too. Finally, you will also need to download the data for this workshop.
+You will need to have both R and RStudio installed on your computer to complete this workshop. Although it is not imperative that you have the latest version of RStudio installed, **you will need to have at least version 4.0 of R installed **. Please note that you might need administrative permissions to install these programs. After installing them, you will also need to install some R packages too. Finally, you will also need to download the data for this workshop.
 
 ## R {#r}
 
@@ -22,7 +22,7 @@ An R package is a collection of R code and documentation that can be installed t
 
 ```{r, eval = FALSE}
 install.packages(c("sf", "dplyr", "sp", "rgeos", "rgdal", "raster",
-                   "units", "prioritizr", "prioritizrdata", "Rsymphony",
+                   "units", "prioritizr", "prioritizrdata",
                    "mapview", "assertthat", "remotes", "gridExtra",
                    "BiocManager"))
 BiocManager::install("lpsymphony")
@@ -82,3 +82,23 @@ Depending on your local R environment you might need to install the R package sl
 ```{r, eval=FALSE}
 install.packages('slam')
 ```
+
+## Test your install
+
+You can check if you have successfully installed Gurobi by running the code below. If you don't get any errors, you are good to go. Don't worry about what it means. That is what we are going to learn.
+```{r, eval=FALSE}
+library(prioritizr)
+
+data(sim_pu_raster)
+data(sim_features)
+
+p <- problem(sim_pu_raster, sim_features) %>%
+  add_min_set_objective() %>%
+  add_binary_decisions() %>%
+  add_relative_targets(0.1) %>%
+  add_gurobi_solver(verbose = FALSE)
+
+s <- solve(p)
+```
+
+If you couldn't install Gurobi, and instead went with lpsymphony, try substituting `add_gurobi_solver(verbose = FALSE)` with `add_lpsymphony_solver(verbose = FALSE)`.

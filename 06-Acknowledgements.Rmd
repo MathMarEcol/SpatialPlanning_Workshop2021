@@ -1,0 +1,5 @@
+# Acknowledgements
+
+Many thanks to the [Prioritizr Team](https://prioritizr.net/articles/prioritizr.html) for the development of this software, and for providing the source code for their own workshops so we could more easily develop this one.
+
+Also to Yihui Xie for developing the [bookdown R package](http://bookdown.org) that underpins these notes. We also thank Garrett Grolemund and Hadley Wickham for creating one of the Rstudio screenshots used in this manual that was originally a part of their _R for Data Science_ book.
