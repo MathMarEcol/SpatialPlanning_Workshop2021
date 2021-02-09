@@ -62,7 +62,7 @@
 </h2>
 <p>To start things off, let’s keep things simple. Let’s create a prioritization using the <a href="https://prioritizr.net/reference/add_min_set_objective.html">minimum set formulation of the reserve selection problem</a>. This formulation means that <strong>we want a solution that will meet the targets for our biodiversity features for minimum cost</strong>. Here, we will set 5% targets for each vegetation class and use the data in the <code>cost</code> column to specify acquisition costs. Unlike Marxan, we do not have to calibrate species penalty factors (SPFs) to ensure that our target are met—prioritizr should always return solutions to minimum set problems where all the targets are met.</p>
 <p>Although we strongly recommend using <a href="https://www.gurobi.com/">Gurobi</a> to solve problems (with <a href="https://prioritizr.net/reference/add_gurobi_solver.html"><code>add_gurobi_solver</code></a>), you can also use the <a href="https://prioritizr.net/reference/add_lsymphony_solver.html">lpsymphony solver</a> in this workshop (it’s much easier to install). The Gurobi solver is much faster than the lpsymphony solver (<a href="https://prioritizr.net/articles/gurobi_installation.html">see here for installation instructions</a>).</p>
-<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print planning unit data</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">)</span></code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
@@ -73,7 +73,7 @@
 ## names       :   id,              cost, status, locked_in, locked_out 
 ## min values  :    1, 0.192488262910798,      0,         0,          0 
 ## max values  : 1130,  61.9272727272727,      2,         1,          1</code></pre>
-<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
 <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_min_set_objective.html">add_min_set_objective</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -95,7 +95,7 @@
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
-<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem</span>
 <span class="va">s1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span>
 
@@ -110,15 +110,15 @@
 ## names       :   id,              cost, status, locked_in, locked_out, solution_1 
 ## min values  :    1, 0.192488262910798,      0,         0,          0,          0 
 ## max values  : 1130,  61.9272727272727,      2,         1,          1,          1</code></pre>
-<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate number of planning units selected in the prioritization</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">s1</span><span class="op">$</span><span class="va">solution_1</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 35</code></pre>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate total cost of the prioritization</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">s1</span><span class="op">$</span><span class="va">solution_1</span> <span class="op">*</span> <span class="va">s1</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 808.4013</code></pre>
-<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s1</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-69-1.png" width="65%" style="display: block; margin: auto;"></div>
@@ -138,7 +138,7 @@
 </h2>
 <p>Our first prioritization suffers many limitations, so let’s add additional constraints to the problem to make it more useful.</p>
 <p>First, let’s lock in planing units that are already by covered protected areas. If some vegetation communities are already secured inside existing protected areas, then we might not need to add as many new protected areas to the existing protected area system to meet their targets. Since our planning unit data (<code>tas_pu</code>) already contains this information in the <code>locked_in</code> column, we can use this column name to specify which planning units should be locked in.</p>
-<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_min_set_objective.html">add_min_set_objective</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -161,7 +161,7 @@
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
-<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem</span>
 <span class="va">s2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span>
 
@@ -169,7 +169,7 @@
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s2</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-71-1.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Let’s pretend that we talked to an expert on the vegetation communities in our study system and they recommended that a 20% target was needed for each vegetation class. So, armed with this information, let’s set the targets to 20%.</p>
-<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
 <span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_min_set_objective.html">add_min_set_objective</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -192,7 +192,7 @@
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
-<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem</span>
 <span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p3</span><span class="op">)</span>
 
@@ -200,7 +200,7 @@
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s3</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-72-1.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Next, let’s lock out highly degraded areas. Similar to before, this data is present in our planning unit data so we can use the <code>locked_out</code> column name to achieve this.</p>
-<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
 <span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_min_set_objective.html">add_min_set_objective</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -210,7 +210,7 @@
       <span class="fu"><a href="https://prioritizr.net/reference/add_binary_decisions.html">add_binary_decisions</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_gurobi_solver.html">add_gurobi_solver</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
       <span class="co"># add_lpsymphony_solver(verbose = FALSE)</span></code></pre></div>
-<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print problem</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">p4</span><span class="op">)</span></code></pre></div>
 <pre><code>## Conservation Problem
@@ -225,14 +225,14 @@
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
-<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem</span>
 <span class="va">s4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p4</span><span class="op">)</span>
 
 <span class="co"># plot solution</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/spplot.html">spplot</a></span><span class="op">(</span><span class="va">s4</span>, <span class="st">"solution_1"</span>, col.regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"darkgreen"</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"s4"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-74-1.png" width="65%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">plot_solution</span><span class="op">(</span><span class="va">s4</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-74-2.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Now, let’s compare the solutions.</p>
@@ -256,7 +256,7 @@
 <p>Plans for protected area systems should facilitate gene flow and dispersal between individual reserves in the system. However, the prioritizations we have made so far have been highly fragmented.</p>
 <p>We can add penalties to our conservation planning problem to penalize fragmentation (i.e. total exposed boundary length) and we also need to set a useful penalty value when adding such penalties. If we set our penalty value too low, then we will end up with a solution that is identical to the solution with no added penalties. If we set our penalty value too high, then prioritizr will take a long time to solve the problem and we will end up with a solution that contains lots of extra planning units that are not needed (since the penalty value is so high that minimizing fragmentation is more important than cost). As a rule of thumb, we generally want penalty values between 0.00001 and 0.01 but finding a useful penalty value requires calibration. The “correct” penalty value depends on the size of the planning units, the main objective values (e.g. cost values), and the effect of fragmentation on biodiversity persistence.</p>
 <p>Let’s create a new problem that is similar to our previous problem (<code>p4</code>)—except that it contains boundary length penalties and a slightly higher optimality gap to reduce runtime (default is 0.1)—and solve it. Since our planning unit data is in a spatial format (i.e. vector or raster data), prioritizr can automatically calculate the boundary data for us.</p>
-<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
 <span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_min_set_objective.html">add_min_set_objective</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -282,7 +282,7 @@
 ##   penalties:      &lt;Boundary penalties [edge factor (min: 0.5, max: 0.5), penalty (5e-04), zones]&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
-<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem,</span>
 <span class="co"># note this will take around 30 seconds</span>
 <span class="va">s5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p5</span><span class="op">)</span>
@@ -297,7 +297,7 @@
 ## names       :   id,              cost, status, locked_in, locked_out, solution_1 
 ## min values  :    1, 0.192488262910798,      0,         0,          0,          0 
 ## max values  : 1130,  61.9272727272727,      2,         1,          1,          1</code></pre>
-<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s5</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-76-1.png" width="65%" style="display: block; margin: auto;"></div>
@@ -317,7 +317,7 @@
 </h2>
 <p>In the real-world, the funding available for conservation is often very limited. As a consequence, decision makers often need prioritizations where the total cost of priority areas does not exceed a budget.</p>
 <p>In our fourth prioritization (<code>s4</code>), we found that we would need to spend an additional $1317 million AUD to ensure that each vegetation community is adequately represented in the protected area system. But what if the funds available for establishing new protected areas were limited to $100 million AUD? In this case, we need a “budget limited prioritization”. Budget limited prioritizations aim to maximize some measure of conservation benefit subject to a budget (e.g. <a href="https://prioritizr.net/reference/add_max_cover_objective.html">number of species with at least one occurrence in the protected area system</a>, or <a href="https://prioritizr.net/reference/add_max_phylo_div_objective.html">phylogenetic diversity</a>). Let’s create a prioritization by maximizing the number of adequately represented features whilst keeping within a pre-specified budget.</p>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># funds for additional land acquisition (same units as cost data)</span>
 <span class="va">funds</span> <span class="op">&lt;-</span> <span class="fl">100</span>
 
@@ -325,7 +325,7 @@
 <span class="va">budget</span> <span class="op">&lt;-</span> <span class="va">funds</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">s4</span><span class="op">$</span><span class="va">cost</span> <span class="op">*</span> <span class="va">s4</span><span class="op">$</span><span class="va">locked_in</span><span class="op">)</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">budget</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 8575.56</code></pre>
-<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
 <span class="va">p6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_max_features_objective.html">add_max_features_objective</a></span><span class="op">(</span><span class="va">budget</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -345,26 +345,26 @@
 ##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    &lt;Locked out planning units [45 locked units]
-##                    Locked in planning units [257 locked units]&gt;
+##   constraints:    &lt;Locked in planning units [257 locked units]
+##                    Locked out planning units [45 locked units]&gt;
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
-<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem</span>
 <span class="va">s6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p6</span><span class="op">)</span>
 
 <span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s6</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-1.png" width="65%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate feature representation</span>
 <span class="va">r6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/eval_feature_representation_summary.html">eval_feature_representation_summary</a></span><span class="op">(</span><span class="va">p6</span>, <span class="va">s6</span><span class="op">[</span>, <span class="st">"solution_1"</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># calculate number of features with targets met</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">r6</span><span class="op">$</span><span class="va">relative_held</span> <span class="op">&gt;=</span> <span class="fl">0.2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 28</code></pre>
-<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># find out which features have their targets met when we add weights,</span>
 <span class="co"># note that NA is for vegetation.61</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">r6</span><span class="op">$</span><span class="va">feature</span><span class="op">[</span><span class="va">r6</span><span class="op">$</span><span class="va">relative_held</span> <span class="op">&gt;=</span> <span class="fl">0.2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
@@ -374,7 +374,7 @@
 ## [25] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.45"</code></pre>
 <p>We can also add weights to specify that it is more important to meet the targets for certain features and less important for other features. A common approach for weighting features is to assign a greater importance to features with smaller spatial distributions. The rationale behind this weighting method is that features with smaller spatial distributions are at greater risk of extinction.</p>
 <p>So, let’s calculate some weights for our vegetation communities and see how weighting the features changes our prioritization.</p>
-<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate weights as the log inverse number of grid cells that each vegetation</span>
 <span class="co"># class occupies, rescaled between 1 and 100</span>
 <span class="va">wts</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats</a></span><span class="op">(</span><span class="va">tas_features</span>, <span class="st">"sum"</span><span class="op">)</span>
@@ -383,15 +383,15 @@
 <span class="co"># print the name of the feature with smallest weight</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/names.html">names</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/which.minmax.html">which.min</a></span><span class="op">(</span><span class="va">wts</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 <pre><code>## [1] "vegetation.20"</code></pre>
-<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the name of the feature with greatest weight</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/names.html">names</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/which.minmax.html">which.max</a></span><span class="op">(</span><span class="va">wts</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 <pre><code>## [1] "vegetation.52"</code></pre>
-<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot histogram of weights</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/hist.html">hist</a></span><span class="op">(</span><span class="va">wts</span>, main <span class="op">=</span> <span class="st">"feature weights"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-weights-1.png" width="65%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem with weights</span>
 <span class="va">p7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_max_features_objective.html">add_max_features_objective</a></span><span class="op">(</span><span class="va">budget</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -417,21 +417,21 @@
 ##   penalties:      &lt;Feature weights [weights (min: 1, max: 10)]&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
-<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem</span>
 <span class="va">s7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p7</span><span class="op">)</span>
 
 <span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s7</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-weights-2.png" width="65%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate feature representation</span>
 <span class="va">r7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/eval_feature_representation_summary.html">eval_feature_representation_summary</a></span><span class="op">(</span><span class="va">p7</span>, <span class="va">s7</span><span class="op">[</span>, <span class="st">"solution_1"</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># calculate number of features with targets met</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">r7</span><span class="op">$</span><span class="va">relative_held</span> <span class="op">&gt;=</span> <span class="fl">0.2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 22</code></pre>
-<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># find out which features have their targets met when we add weights,</span>
 <span class="co"># note that NA is for vegetation.61</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">r7</span><span class="op">$</span><span class="va">feature</span><span class="op">[</span><span class="va">r7</span><span class="op">$</span><span class="va">relative_held</span> <span class="op">&gt;=</span> <span class="fl">0.2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
@@ -454,7 +454,7 @@
 </h2>
 <p>In systematic conservation planning, only rarely do we have data on all of the stakeholder preferences and biodiversity features that we are interested in conserving. As a consequence, it is often useful to generate a portfolio of near optimal solutions to present to decision makers to guide the reserve selection process.</p>
 <p>Generally we would want many solutions in our portfolio (e.g. 1000) to ensure that our portfolio contains a range of spatially distinct solutions, but here we will generate a portfolio containing just six near-optimal solutions so the code doesn’t take too long to run. We will also increase the optimality gap to obtain solutions that are more suboptimal than earlier (the default gap value is 0.1).</p>
-<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make problem with a shuffle portfolio</span>
 <span class="va">p8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_max_features_objective.html">add_max_features_objective</a></span><span class="op">(</span><span class="va">budget</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -465,7 +465,7 @@
                             remove_duplicates <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
       <span class="fu"><a href="https://prioritizr.net/reference/add_gurobi_solver.html">add_gurobi_solver</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span>, gap <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
       <span class="co"># add_lpsymphony_solver(verbose = TRUE, gap = 10)</span></code></pre></div>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print problem</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">p8</span><span class="op">)</span></code></pre></div>
 <pre><code>## Conservation Problem
@@ -479,7 +479,7 @@
 ##   penalties:      &lt;Feature weights [weights (min: 1, max: 10)]&gt;
 ##   portfolio:      Shuffle portfolio [number_solutions (6), remove_duplicates (0), threads (1)]
 ##   solver:         Gurobi [first_feasible (0), gap (10), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (1)]</code></pre>
-<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># solve problem</span>
 <span class="co"># note that this will contain six solutions since we added a portfolio</span>
 <span class="va">s8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/solve.html">solve</a></span><span class="op">(</span><span class="va">p8</span><span class="op">)</span></code></pre></div>
@@ -519,7 +519,7 @@
 ## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
 ## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
 ## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0xc0a00086
+## Model fingerprint: 0xa93fc95c
 ## Variable types: 0 continuous, 1192 integer (1192 binary)
 ## Coefficient statistics:
 ##   Matrix range     [1e-05, 2e+02]
@@ -534,25 +534,25 @@
 ## Presolved: 63 rows, 1049 columns, 3152 nonzeros
 ## 
 ## 
-## Root relaxation: objective 1.319894e+02, 64 iterations, 0.00 seconds
+## Root relaxation: objective 1.319894e+02, 74 iterations, 0.00 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  131.98943    0   51   -0.00000  131.98943      -     -    0s
-## H    0     0                      85.9821207  131.98943  53.5%     -    0s
+##      0     0  131.98943    0   53   -0.00000  131.98943      -     -    0s
+## H    0     0                      76.0886805  131.98943  73.5%     -    0s
 ## 
-## Explored 1 nodes (64 simplex iterations) in 0.03 seconds
+## Explored 1 nodes (74 simplex iterations) in 0.03 seconds
 ## Thread count was 1 (of 8 available processors)
 ## 
-## Solution count 2: 85.9821 -0 
+## Solution count 2: 76.0887 -0 
 ## 
 ## Optimal solution found (tolerance 1.00e+01)
-## Best objective 8.598212070754e+01, best bound 1.319894282770e+02, gap 53.5080%
+## Best objective 7.608868051375e+01, best bound 1.319894289459e+02, gap 73.4679%
 ## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
 ## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
 ## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0xdf3401d1
+## Model fingerprint: 0x1054afc1
 ## Variable types: 0 continuous, 1192 integer (1192 binary)
 ## Coefficient statistics:
 ##   Matrix range     [1e-05, 2e+02]
@@ -573,85 +573,19 @@
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ##      0     0  131.98943    0   50   -0.00000  131.98943      -     -    0s
-## H    0     0                      81.6052625  131.98943  61.7%     -    0s
+## H    0     0                      87.8654991  131.98943  50.2%     -    0s
 ## 
 ## Explored 1 nodes (66 simplex iterations) in 0.03 seconds
 ## Thread count was 1 (of 8 available processors)
 ## 
-## Solution count 2: 81.6053 -0 
+## Solution count 2: 87.8655 -0 
 ## 
 ## Optimal solution found (tolerance 1.00e+01)
-## Best objective 8.160526247671e+01, best bound 1.319894282434e+02, gap 61.7413%
+## Best objective 8.786549910833e+01, best bound 1.319894282402e+02, gap 50.2176%
 ## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
 ## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
 ## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0x05f944d4
-## Variable types: 0 continuous, 1192 integer (1192 binary)
-## Coefficient statistics:
-##   Matrix range     [1e-05, 2e+02]
-##   Objective range  [7e-08, 1e+01]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [9e+03, 9e+03]
-## Found heuristic solution: objective -0.0000000
-## Presolve removed 0 rows and 143 columns
-## Presolve time: 0.03s
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## Variable types: 0 continuous, 1049 integer (1049 binary)
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## 
-## 
-## Root relaxation: objective 1.319894e+02, 70 iterations, 0.00 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0  131.98943    0   53   -0.00000  131.98943      -     -    0s
-## H    0     0                      76.0886968  131.98943  73.5%     -    0s
-## 
-## Explored 1 nodes (70 simplex iterations) in 0.03 seconds
-## Thread count was 1 (of 8 available processors)
-## 
-## Solution count 2: 76.0887 -0 
-## 
-## Optimal solution found (tolerance 1.00e+01)
-## Best objective 7.608869684247e+01, best bound 1.319894289957e+02, gap 73.4679%
-## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
-## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
-## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0x9c6ecdfc
-## Variable types: 0 continuous, 1192 integer (1192 binary)
-## Coefficient statistics:
-##   Matrix range     [1e-05, 2e+02]
-##   Objective range  [7e-08, 1e+01]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [9e+03, 9e+03]
-## Found heuristic solution: objective -0.0000000
-## Presolve removed 0 rows and 143 columns
-## Presolve time: 0.03s
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## Variable types: 0 continuous, 1049 integer (1049 binary)
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## 
-## 
-## Root relaxation: objective 1.319894e+02, 63 iterations, 0.00 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0  131.98943    0   51   -0.00000  131.98943      -     -    0s
-## H    0     0                      85.4364586  131.98943  54.5%     -    0s
-## 
-## Explored 1 nodes (63 simplex iterations) in 0.03 seconds
-## Thread count was 1 (of 8 available processors)
-## 
-## Solution count 2: 85.4365 -0 
-## 
-## Optimal solution found (tolerance 1.00e+01)
-## Best objective 8.543645855919e+01, best bound 1.319894285133e+02, gap 54.4884%
-## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
-## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
-## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0x89dc984f
+## Model fingerprint: 0x47f09dfe
 ## Variable types: 0 continuous, 1192 integer (1192 binary)
 ## Coefficient statistics:
 ##   Matrix range     [1e-05, 2e+02]
@@ -666,22 +600,88 @@
 ## Presolved: 63 rows, 1049 columns, 3152 nonzeros
 ## 
 ## 
-## Root relaxation: objective 1.319894e+02, 67 iterations, 0.00 seconds
+## Root relaxation: objective 1.319894e+02, 73 iterations, 0.00 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  131.98943    0   51   -0.00000  131.98943      -     -    0s
-## H    0     0                      85.6457182  131.98943  54.1%     -    0s
+##      0     0  131.98943    0   53   -0.00000  131.98943      -     -    0s
+## H    0     0                      76.0886867  131.98943  73.5%     -    0s
 ## 
-## Explored 1 nodes (67 simplex iterations) in 0.03 seconds
+## Explored 1 nodes (73 simplex iterations) in 0.03 seconds
 ## Thread count was 1 (of 8 available processors)
 ## 
-## Solution count 2: 85.6457 -0 
+## Solution count 2: 76.0887 -0 
 ## 
 ## Optimal solution found (tolerance 1.00e+01)
-## Best objective 8.564571822961e+01, best bound 1.319894283785e+02, gap 54.1109%</code></pre>
-<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+## Best objective 7.608868668868e+01, best bound 1.319894289499e+02, gap 73.4679%
+## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
+## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
+## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
+## Model fingerprint: 0xb3fc07e6
+## Variable types: 0 continuous, 1192 integer (1192 binary)
+## Coefficient statistics:
+##   Matrix range     [1e-05, 2e+02]
+##   Objective range  [7e-08, 1e+01]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [9e+03, 9e+03]
+## Found heuristic solution: objective -0.0000000
+## Presolve removed 0 rows and 143 columns
+## Presolve time: 0.02s
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## Variable types: 0 continuous, 1049 integer (1049 binary)
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## 
+## 
+## Root relaxation: objective 1.319894e+02, 73 iterations, 0.00 seconds
+## 
+##     Nodes    |    Current Node    |     Objective Bounds      |     Work
+##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+## 
+##      0     0  131.98943    0   53   -0.00000  131.98943      -     -    0s
+## H    0     0                      76.0886805  131.98943  73.5%     -    0s
+## 
+## Explored 1 nodes (73 simplex iterations) in 0.02 seconds
+## Thread count was 1 (of 8 available processors)
+## 
+## Solution count 2: 76.0887 -0 
+## 
+## Optimal solution found (tolerance 1.00e+01)
+## Best objective 7.608868051375e+01, best bound 1.319894289499e+02, gap 73.4679%
+## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
+## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
+## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
+## Model fingerprint: 0xd7a3eb1c
+## Variable types: 0 continuous, 1192 integer (1192 binary)
+## Coefficient statistics:
+##   Matrix range     [1e-05, 2e+02]
+##   Objective range  [7e-08, 1e+01]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [9e+03, 9e+03]
+## Found heuristic solution: objective -0.0000000
+## Presolve removed 0 rows and 143 columns
+## Presolve time: 0.02s
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## Variable types: 0 continuous, 1049 integer (1049 binary)
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## 
+## 
+## Root relaxation: objective 1.319894e+02, 66 iterations, 0.00 seconds
+## 
+##     Nodes    |    Current Node    |     Objective Bounds      |     Work
+##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+## 
+##      0     0  131.98943    0   50   -0.00000  131.98943      -     -    0s
+## H    0     0                      82.2654235  131.98943  60.4%     -    0s
+## 
+## Explored 1 nodes (66 simplex iterations) in 0.02 seconds
+## Thread count was 1 (of 8 available processors)
+## 
+## Solution count 2: 82.2654 -0 
+## 
+## Optimal solution found (tolerance 1.00e+01)
+## Best objective 8.226542351435e+01, best bound 1.319894282820e+02, gap 60.4434%</code></pre>
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print solution</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">s8</span><span class="op">)</span></code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
@@ -692,24 +692,24 @@
 ## names       :   id,              cost, status, locked_in, locked_out, solution_1, solution_2, solution_3, solution_4, solution_5, solution_6 
 ## min values  :    1, 0.192488262910798,      0,         0,          0,          0,          0,          0,          0,          0,          0 
 ## max values  : 1130,  61.9272727272727,      2,         1,          1,          1,          1,          1,          1,          1,          1</code></pre>
-<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the cost of the first solution</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">s8</span><span class="op">$</span><span class="va">solution_1</span> <span class="op">*</span> <span class="va">s8</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 680.883</code></pre>
-<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the cost of the second solution</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">s8</span><span class="op">$</span><span class="va">solution_2</span> <span class="op">*</span> <span class="va">s8</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 710.2463</code></pre>
-<div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
+<pre><code>## [1] 617.7545</code></pre>
+<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the proportion of planning units with the same solution values</span>
 <span class="co"># in the first and second solutions</span>
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">s8</span><span class="op">$</span><span class="va">solution_1</span> <span class="op">==</span> <span class="va">s8</span><span class="op">$</span><span class="va">solution_2</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 0.9876106</code></pre>
-<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
+<pre><code>## [1] 0.9955752</code></pre>
+<div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot first solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s8</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-82-1.png" width="65%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot all solutions</span>
 <span class="co"># s8_plots &lt;- lapply(paste0("solution_", seq_len(6)), function(x) {</span>
 <span class="co">#   spplot(s8, x, main = x, col.regions = c("white", "darkgreen"))</span>

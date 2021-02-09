@@ -1,3 +1,4 @@
+fig:Problem
 fig:Objective
 fig:Box
 welcome

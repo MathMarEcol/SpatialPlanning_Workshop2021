@@ -39,7 +39,7 @@ The _prioritizr R_ package is designed to help you build and solve conservation 
 
 In general, the goal of an optimization problem is to minimize (or maximize) an _objective function_ that is calculated using a set of _decision variables_, subject to a series of _constraints_ to ensure that solution exhibits specific properties. The _objective function_ describes the quantity which we are trying to minimize (e.g. cost of the solution) or maximize (e.g. number of features conserved). The _decision variables_ describe the entities that we can control, and indicate which planning units are selected for conservation management and which of those are not. The _constraints_ can be thought of as rules that the need decision variables need to follow. 
 
-```{r Problem equation, echo = FALSE, fig.cap = "Prioritizr problem equation", out.width = '100%', fig.align = "center"}
+```{r Problem, echo = FALSE, fig.cap = "Prioritizr problem equation", out.width = '100%', fig.align = "center"}
 knitr::include_graphics("images/Equation.png")
 ```
 
