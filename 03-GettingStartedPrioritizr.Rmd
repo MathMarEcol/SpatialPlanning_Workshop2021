@@ -744,8 +744,10 @@ eval_connectivity_summary(
 
 ### Importance (irreplaceability)
 
-Conservation plans can take a long time to implement. Since funding availability and habitat quality can decline over time, **it is critical that the most important places in a prioritization are scheduled for protection as early as possible**. For instance,    
-* some planning units in a solution might contain many rare species which do not occur in any other planning units. 
+Conservation plans can take a long time to implement. Since funding availability and habitat quality can decline over time, **it is critical that the most important places in a prioritization are scheduled for protection as early as possible**. For instance:
+
+* some planning units in a solution might contain many rare species which do not occur in any other planning units.
+
 * some planning units might offer an especially high return on investment that reduces costs considerably. 
 
 As a consequence, conservation planners often need information on which planning units selected in a prioritization are most important to the overall success of the prioritization. To achieve this, conservation planners can use importance (irreplaceability) scores for each planning unit selected in a solution.

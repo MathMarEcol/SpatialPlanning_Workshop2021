@@ -47,7 +47,7 @@ Now let's examine the solution.
 ```{block2, type="rmdquestion", warning = FALSE}
 1. How many planing units were selected in the prioritization? What proportion of planning units were selected in the prioritization?
 2. Is there a pattern in the spatial distribution of the priority areas?
-3. Can you verify that all of the targets were met in the prioritization (hint: `feature_representation(p1, s1[, "solution_1"])`)?
+3. Can you verify that all of the targets were met in the prioritization (hint: `eval_feature_representation_summary(p1, s1[, "solution_1"])`)?
 
 ```
 
