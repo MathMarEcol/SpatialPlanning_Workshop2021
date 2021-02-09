@@ -690,8 +690,8 @@ to build a precise representation of the conservation planning problem required.
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.1, max: 0.1)]
 ##   decisions:      default
-##   constraints:    &lt;Locked in planning units [10 locked units]
-##                    Locked out planning units [10 locked units]&gt;
+##   constraints:    &lt;Locked out planning units [10 locked units]
+##                    Locked in planning units [10 locked units]&gt;
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         default</code></pre>
@@ -1182,7 +1182,7 @@ to build a precise representation of the conservation planning problem required.
 ## Presolved: 293 rows, 234 columns, 1026 nonzeros
 ## 
 ## 
-## Root relaxation: objective 2.265862e+03, 218 iterations, 0.01 seconds
+## Root relaxation: objective 2.265862e+03, 218 iterations, 0.00 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -1225,7 +1225,7 @@ to build a precise representation of the conservation planning problem required.
 <code class="sourceCode R"><span class="co"># extract time spent solving solution</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">s37</span>, <span class="st">"runtime"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## solution_1 
-##  0.1604471</code></pre>
+##  0.1551521</code></pre>
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># extract state message from the solver that describes why this specific</span>
 <span class="co"># solution was returned</span>
