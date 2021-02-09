@@ -61,7 +61,7 @@
 <h2>
 <span class="header-section-number">5.1</span> Data import<a class="anchor" aria-label="anchor" href="#data-import"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://prioritizr.net">prioritizr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://prioritizr.github.io/prioritizrdata/">prioritizrdata</a></span><span class="op">)</span>
@@ -75,7 +75,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">assertthat</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Some of this data is built in to the Prioritizr package, but it is lower resolution so we use that in the data/ folder.</span>
 <span class="co"># load planning unit data</span>
 <span class="co"># data(tas_pu) # SpatialPolygonsDataFrame # If raw, use readOGR(filename)</span>
@@ -90,7 +90,7 @@
 ## Source: "/Users/jason/GitHub/SpatialPlanning_Workshop2021/data/pu.shp", layer: "pu"
 ## with 1130 features
 ## It has 5 fields</code></pre>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tas_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span><span class="op">(</span><span class="st">"data/vegetation.tif"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/projection.html">proj4string</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">albers</span> <span class="co"># There is a problem with projection so we re-add it here</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/projection.html">proj4string</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">albers</span> <span class="co"># There is a problem with projection so we re-add it here</span>
@@ -127,7 +127,7 @@
 <li>
 <code>locked_out</code>: logical values (i.e. <code>TRUE</code>/<code>FALSE</code>) indicating if planning units cannot be managed as a protected area because they contain are too degraded.</li>
 </ul>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print a short summary of the data</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">)</span></code></pre></div>
 <pre><code>## class       : SpatialPolygonsDataFrame 
@@ -138,11 +138,11 @@
 ## names       :   id,              cost, status, locked_in, locked_out 
 ## min values  :    1, 0.192488262910798,      0,         0,          0 
 ## max values  : 1130,  61.9272727272727,      2,         1,          1</code></pre>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot the planning unit data</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-59-1.png" width="672" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the structure of object</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">tas_pu</span>, max.level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code>## Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
@@ -152,17 +152,17 @@
 ##   ..@ bbox       : num [1:2, 1:2] 1080623 -4840595 1399989 -4497092
 ##   .. ..- attr(*, "dimnames")=List of 2
 ##   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot</code></pre>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the class of the object</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "SpatialPolygonsDataFrame"
 ## attr(,"package")
 ## [1] "sp"</code></pre>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the slots of the object</span>
 <span class="fu">slotNames</span><span class="op">(</span><span class="va">tas_pu</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "data"        "polygons"    "plotOrder"   "bbox"        "proj4string"</code></pre>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the geometry for the 80th planning unit</span>
 <span class="va">tas_pu</span><span class="op">@</span><span class="va">polygons</span><span class="op">[[</span><span class="fl">80</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <pre><code>## An object of class "Polygons"
@@ -213,16 +213,16 @@
 ## 
 ## Slot "area":
 ## [1] 1060361</code></pre>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the coordinate reference system</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">@</span><span class="va">proj4string</span><span class="op">)</span></code></pre></div>
 <pre><code>## CRS arguments:
 ##  +proj=aea +lat_0=0 +lon_0=132 +lat_1=-18 +lat_2=-36 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs</code></pre>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print number of planning units (geometries) in the data</span>
 <span class="fu"><a href="https://prioritizr.net/reference/OptimizationProblem-methods.html">nrow</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1130</code></pre>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the first six rows in the attribute data</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/headtail.html">head</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">@</span><span class="va">data</span><span class="op">)</span></code></pre></div>
 <pre><code>##   id     cost status locked_in locked_out
@@ -232,27 +232,27 @@
 ## 3  4 32.41614      0     FALSE      FALSE
 ## 4  5 26.17706      0     FALSE      FALSE
 ## 5  6 51.26218      0     FALSE      FALSE</code></pre>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the first six values in the cost column of the attribute data</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/headtail.html">head</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 60.24638 19.86301 59.68051 32.41614 26.17706 51.26218</code></pre>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the highest cost value</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 61.92727</code></pre>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the smallest cost value</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.1924883</code></pre>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print average cost value</span>
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">tas_pu</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 25.13536</code></pre>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot a map of the planning unit cost data</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/spplot.html">spplot</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="st">"cost"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-60-1.png" width="60%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot an interactive map of the planning unit cost data</span>
 <span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html">mapview</a></span><span class="op">(</span><span class="va">tas_pu</span>, zcol <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span></code></pre></div>
 <p>Now, you can try and answer some questions about the planning unit data.</p>
@@ -282,7 +282,7 @@
 <p>Within each layer, each cell corresponds to a 1 by 1 km square. The values associated with each grid cell indicate the (one) presence or (zero) absence of a given vegetation class in the cell.</p>
 <div class="inline-figure"><img src="images/rasterbands.png"></div>
 <p>Let’s explore the vegetation data.</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print a short summary of the data</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## class      : RasterStack 
@@ -293,38 +293,38 @@
 ## names      : vegetation.1, vegetation.2, vegetation.3, vegetation.4, vegetation.5, vegetation.6, vegetation.7, vegetation.8, vegetation.9, vegetation.10, vegetation.11, vegetation.12, vegetation.13, vegetation.14, vegetation.15, ... 
 ## min values :            0,            0,            0,            0,            0,            0,            0,            0,            0,             0,             0,             0,             0,             0,             0, ... 
 ## max values :            1,            1,            1,            1,            1,            1,            1,            1,            1,             1,             1,             1,             1,             1,             1, ...</code></pre>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot a map of the 36th vegetation class</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">36</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-63-1.png" width="672" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot an interactive map of the 36th vegetation class</span>
 <span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html">mapview</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">36</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print number of rows in the data</span>
 <span class="fu"><a href="https://prioritizr.net/reference/OptimizationProblem-methods.html">nrow</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 343</code></pre>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print number of columns  in the data</span>
 <span class="fu"><a href="https://prioritizr.net/reference/OptimizationProblem-methods.html">ncol</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 320</code></pre>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print number of cells in the data</span>
 <span class="fu"><a href="https://prioritizr.net/reference/OptimizationProblem-methods.html">ncell</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 109760</code></pre>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print number of layers in the data</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/nlayers.html">nlayers</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 62</code></pre>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print  resolution on the x-axis</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/resolution.html">xres</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1000</code></pre>
-<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print resolution on the y-axis</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/resolution.html">yres</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1000</code></pre>
-<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print spatial extent of the grid, i.e. coordinates for corners</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/extent.html">extent</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">)</span></code></pre></div>
 <pre><code>## class      : Extent 
@@ -332,12 +332,12 @@
 ## xmax       : 1400496 
 ## ymin       : -4841217 
 ## ymax       : -4498217</code></pre>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the coordinate reference system</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">@</span><span class="va">crs</span><span class="op">)</span></code></pre></div>
 <pre><code>## CRS arguments:
 ##  +proj=aea +lat_0=0 +lon_0=132 +lat_1=-18 +lat_2=-36 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs</code></pre>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print a summary of the first layer in the stack</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## class      : RasterLayer 
@@ -349,34 +349,34 @@
 ## source     : /Users/jason/GitHub/SpatialPlanning_Workshop2021/data/vegetation.tif 
 ## names      : vegetation.1 
 ## values     : 0, 1  (min, max)</code></pre>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the value in the 800th cell in the first layer of the stack</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">800</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##   
 ## 0</code></pre>
-<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the value of the cell located in the 30th row and the 60th column of</span>
 <span class="co"># the first layer</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">30</span>, <span class="fl">60</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##   
 ## 0</code></pre>
-<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the sum of all the cell values in the first layer</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="st">"sum"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 36</code></pre>
-<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the maximum value of all the cell values in the first layer</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="st">"max"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the minimum value of all the cell values in the first layer</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="st">"min"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the mean value of all the cell values in the first layer</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats</a></span><span class="op">(</span><span class="va">tas_features</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="st">"mean"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.0003279883</code></pre>
-<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the maximum value in each layer</span>
 <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats</a></span><span class="op">(</span><span class="va">tas_features</span>, <span class="st">"max"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 62 x 1
