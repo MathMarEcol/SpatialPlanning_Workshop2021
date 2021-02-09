@@ -1,3 +1,5 @@
+fig:Objective
+fig:Box
 welcome
 setup
 r

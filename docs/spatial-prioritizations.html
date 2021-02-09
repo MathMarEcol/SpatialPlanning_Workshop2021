@@ -121,7 +121,7 @@
 <div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s1</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-68-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-69-1.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Now let’s examine the solution.</p>
 
 <div class="rmdquestion">
@@ -167,7 +167,7 @@
 
 <span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s2</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-70-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-71-1.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Let’s pretend that we talked to an expert on the vegetation communities in our study system and they recommended that a 20% target was needed for each vegetation class. So, armed with this information, let’s set the targets to 20%.</p>
 <div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
@@ -198,7 +198,7 @@
 
 <span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s3</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-71-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-72-1.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Next, let’s lock out highly degraded areas. Similar to before, this data is present in our planning unit data so we can use the <code>locked_out</code> column name to achieve this.</p>
 <div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem</span>
@@ -231,10 +231,10 @@
 
 <span class="co"># plot solution</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/spplot.html">spplot</a></span><span class="op">(</span><span class="va">s4</span>, <span class="st">"solution_1"</span>, col.regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"darkgreen"</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"s4"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-73-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-74-1.png" width="65%" style="display: block; margin: auto;"></div>
 <div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">plot_solution</span><span class="op">(</span><span class="va">s4</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-73-2.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-74-2.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Now, let’s compare the solutions.</p>
 
 <div class="rmdquestion">
@@ -277,8 +277,8 @@
 ##   objective:      Minimum set objective 
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    &lt;Locked in planning units [257 locked units]
-##                    Locked out planning units [45 locked units]&gt;
+##   constraints:    &lt;Locked out planning units [45 locked units]
+##                    Locked in planning units [257 locked units]&gt;
 ##   penalties:      &lt;Boundary penalties [edge factor (min: 0.5, max: 0.5), penalty (5e-04), zones]&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
@@ -300,7 +300,7 @@
 <div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s5</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-75-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-76-1.png" width="65%" style="display: block; margin: auto;"></div>
 <p>Now let’s compare the solutions to the problems with (<code>s5</code>) and without (<code>s4</code>) the boundary length penalties.</p>
 
 <div class="rmdquestion">
@@ -345,8 +345,8 @@
 ##   objective:      Maximum representation objective [budget (8575.56009869836)]
 ##   targets:        Relative targets [targets (min: 0.2, max: 0.2)]
 ##   decisions:      Binary decision 
-##   constraints:    &lt;Locked in planning units [257 locked units]
-##                    Locked out planning units [45 locked units]&gt;
+##   constraints:    &lt;Locked out planning units [45 locked units]
+##                    Locked in planning units [257 locked units]&gt;
 ##   penalties:      &lt;none&gt;
 ##   portfolio:      default
 ##   solver:         Gurobi [first_feasible (0), gap (0.1), numeric_focus (0), presolve (2), threads (1), time_limit (2147483647), verbose (0)]</code></pre>
@@ -356,7 +356,7 @@
 
 <span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s6</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-1.png" width="65%" style="display: block; margin: auto;"></div>
 <div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate feature representation</span>
 <span class="va">r6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/eval_feature_representation_summary.html">eval_feature_representation_summary</a></span><span class="op">(</span><span class="va">p6</span>, <span class="va">s6</span><span class="op">[</span>, <span class="st">"solution_1"</span><span class="op">]</span><span class="op">)</span>
@@ -368,10 +368,10 @@
 <code class="sourceCode R"><span class="co"># find out which features have their targets met when we add weights,</span>
 <span class="co"># note that NA is for vegetation.61</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">r6</span><span class="op">$</span><span class="va">feature</span><span class="op">[</span><span class="va">r6</span><span class="op">$</span><span class="va">relative_held</span> <span class="op">&gt;=</span> <span class="fl">0.2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4"  "vegetation.5"  "vegetation.6"  "vegetation.7" 
-##  [8] "vegetation.8"  "vegetation.11" "vegetation.12" "vegetation.15" "vegetation.17" "vegetation.22" "vegetation.23"
-## [15] "vegetation.25" "vegetation.28" "vegetation.29" "vegetation.30" "vegetation.32" "vegetation.33" "vegetation.34"
-## [22] "vegetation.35" "vegetation.36" "vegetation.37" "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.45"</code></pre>
+<pre><code>##  [1] "vegetation.1"  "vegetation.2"  "vegetation.3"  "vegetation.4"  "vegetation.5"  "vegetation.6"  "vegetation.7"  "vegetation.8" 
+##  [9] "vegetation.11" "vegetation.12" "vegetation.15" "vegetation.17" "vegetation.22" "vegetation.23" "vegetation.25" "vegetation.28"
+## [17] "vegetation.29" "vegetation.30" "vegetation.32" "vegetation.33" "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37"
+## [25] "vegetation.38" "vegetation.39" "vegetation.40" "vegetation.45"</code></pre>
 <p>We can also add weights to specify that it is more important to meet the targets for certain features and less important for other features. A common approach for weighting features is to assign a greater importance to features with smaller spatial distributions. The rationale behind this weighting method is that features with smaller spatial distributions are at greater risk of extinction.</p>
 <p>So, let’s calculate some weights for our vegetation communities and see how weighting the features changes our prioritization.</p>
 <div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
@@ -390,7 +390,7 @@
 <div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot histogram of weights</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/hist.html">hist</a></span><span class="op">(</span><span class="va">wts</span>, main <span class="op">=</span> <span class="st">"feature weights"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-weights-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-weights-1.png" width="65%" style="display: block; margin: auto;"></div>
 <div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make prioritization problem with weights</span>
 <span class="va">p7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/problem.html">problem</a></span><span class="op">(</span><span class="va">tas_pu</span>, <span class="va">tas_features</span>, cost_column <span class="op">=</span> <span class="st">"cost"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -423,7 +423,7 @@
 
 <span class="co"># plot solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s7</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-weights-2.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/budget-weights-2.png" width="65%" style="display: block; margin: auto;"></div>
 <div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate feature representation</span>
 <span class="va">r7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://prioritizr.net/reference/eval_feature_representation_summary.html">eval_feature_representation_summary</a></span><span class="op">(</span><span class="va">p7</span>, <span class="va">s7</span><span class="op">[</span>, <span class="st">"solution_1"</span><span class="op">]</span><span class="op">)</span>
@@ -435,10 +435,9 @@
 <code class="sourceCode R"><span class="co"># find out which features have their targets met when we add weights,</span>
 <span class="co"># note that NA is for vegetation.61</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">r7</span><span class="op">$</span><span class="va">feature</span><span class="op">[</span><span class="va">r7</span><span class="op">$</span><span class="va">relative_held</span> <span class="op">&gt;=</span> <span class="fl">0.2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "vegetation.2"  "vegetation.6"  "vegetation.11" "vegetation.23" "vegetation.28" "vegetation.29" "vegetation.30"
-##  [8] "vegetation.32" "vegetation.33" "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37" "vegetation.38"
-## [15] "vegetation.39" "vegetation.40" "vegetation.45" "vegetation.49" "vegetation.50" "vegetation.52" "vegetation.53"
-## [22] "vegetation.61"</code></pre>
+<pre><code>##  [1] "vegetation.2"  "vegetation.6"  "vegetation.11" "vegetation.23" "vegetation.28" "vegetation.29" "vegetation.30" "vegetation.32"
+##  [9] "vegetation.33" "vegetation.34" "vegetation.35" "vegetation.36" "vegetation.37" "vegetation.38" "vegetation.39" "vegetation.40"
+## [17] "vegetation.45" "vegetation.49" "vegetation.50" "vegetation.52" "vegetation.53" "vegetation.61"</code></pre>
 
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">
@@ -520,7 +519,73 @@
 ## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
 ## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
 ## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0xf21d3e46
+## Model fingerprint: 0x442676a0
+## Variable types: 0 continuous, 1192 integer (1192 binary)
+## Coefficient statistics:
+##   Matrix range     [1e-05, 2e+02]
+##   Objective range  [7e-08, 1e+01]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [9e+03, 9e+03]
+## Found heuristic solution: objective -0.0000000
+## Presolve removed 0 rows and 143 columns
+## Presolve time: 0.02s
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## Variable types: 0 continuous, 1049 integer (1049 binary)
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## 
+## 
+## Root relaxation: objective 1.319894e+02, 64 iterations, 0.00 seconds
+## 
+##     Nodes    |    Current Node    |     Objective Bounds      |     Work
+##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+## 
+##      0     0  131.98943    0   51   -0.00000  131.98943      -     -    0s
+## H    0     0                      79.7807971  131.98943  65.4%     -    0s
+## 
+## Explored 1 nodes (64 simplex iterations) in 0.02 seconds
+## Thread count was 1 (of 8 available processors)
+## 
+## Solution count 2: 79.7808 -0 
+## 
+## Optimal solution found (tolerance 1.00e+01)
+## Best objective 7.978079707914e+01, best bound 1.319894284451e+02, gap 65.4401%
+## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
+## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
+## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
+## Model fingerprint: 0x80a64770
+## Variable types: 0 continuous, 1192 integer (1192 binary)
+## Coefficient statistics:
+##   Matrix range     [1e-05, 2e+02]
+##   Objective range  [7e-08, 1e+01]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [9e+03, 9e+03]
+## Found heuristic solution: objective -0.0000000
+## Presolve removed 0 rows and 143 columns
+## Presolve time: 0.02s
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## Variable types: 0 continuous, 1049 integer (1049 binary)
+## Presolved: 63 rows, 1049 columns, 3152 nonzeros
+## 
+## 
+## Root relaxation: objective 1.319894e+02, 71 iterations, 0.00 seconds
+## 
+##     Nodes    |    Current Node    |     Objective Bounds      |     Work
+##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+## 
+##      0     0  131.98943    0   52   -0.00000  131.98943      -     -    0s
+## H    0     0                      83.1278514  131.98943  58.8%     -    0s
+## 
+## Explored 1 nodes (71 simplex iterations) in 0.02 seconds
+## Thread count was 1 (of 8 available processors)
+## 
+## Solution count 2: 83.1279 -0 
+## 
+## Optimal solution found (tolerance 1.00e+01)
+## Best objective 8.312785137209e+01, best bound 1.319894287260e+02, gap 58.7788%
+## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
+## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
+## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
+## Model fingerprint: 0xfbb620c8
 ## Variable types: 0 continuous, 1192 integer (1192 binary)
 ## Coefficient statistics:
 ##   Matrix range     [1e-05, 2e+02]
@@ -541,7 +606,7 @@
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ##      0     0  131.98943    0   53   -0.00000  131.98943      -     -    0s
-## H    0     0                      76.0886968  131.98943  73.5%     -    0s
+## H    0     0                      76.0886932  131.98943  73.5%     -    0s
 ## 
 ## Explored 1 nodes (74 simplex iterations) in 0.03 seconds
 ## Thread count was 1 (of 8 available processors)
@@ -549,11 +614,11 @@
 ## Solution count 2: 76.0887 -0 
 ## 
 ## Optimal solution found (tolerance 1.00e+01)
-## Best objective 7.608869684247e+01, best bound 1.319894289459e+02, gap 73.4679%
+## Best objective 7.608869321288e+01, best bound 1.319894289499e+02, gap 73.4679%
 ## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
 ## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
 ## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0x99bf4d30
+## Model fingerprint: 0x20bf7614
 ## Variable types: 0 continuous, 1192 integer (1192 binary)
 ## Coefficient statistics:
 ##   Matrix range     [1e-05, 2e+02]
@@ -568,40 +633,7 @@
 ## Presolved: 63 rows, 1049 columns, 3152 nonzeros
 ## 
 ## 
-## Root relaxation: objective 1.319894e+02, 64 iterations, 0.00 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0  131.98943    0   51   -0.00000  131.98943      -     -    0s
-## H    0     0                      85.4772548  131.98943  54.4%     -    0s
-## 
-## Explored 1 nodes (64 simplex iterations) in 0.03 seconds
-## Thread count was 1 (of 8 available processors)
-## 
-## Solution count 2: 85.4773 -0 
-## 
-## Optimal solution found (tolerance 1.00e+01)
-## Best objective 8.547725475187e+01, best bound 1.319894283128e+02, gap 54.4147%
-## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
-## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
-## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0xbdbf75ab
-## Variable types: 0 continuous, 1192 integer (1192 binary)
-## Coefficient statistics:
-##   Matrix range     [1e-05, 2e+02]
-##   Objective range  [7e-08, 1e+01]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [9e+03, 9e+03]
-## Found heuristic solution: objective -0.0000000
-## Presolve removed 0 rows and 143 columns
-## Presolve time: 0.02s
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## Variable types: 0 continuous, 1049 integer (1049 binary)
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## 
-## 
-## Root relaxation: objective 1.319894e+02, 73 iterations, 0.00 seconds
+## Root relaxation: objective 1.319894e+02, 74 iterations, 0.00 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -609,7 +641,7 @@
 ##      0     0  131.98943    0   53   -0.00000  131.98943      -     -    0s
 ## H    0     0                      76.0886740  131.98943  73.5%     -    0s
 ## 
-## Explored 1 nodes (73 simplex iterations) in 0.03 seconds
+## Explored 1 nodes (74 simplex iterations) in 0.02 seconds
 ## Thread count was 1 (of 8 available processors)
 ## 
 ## Solution count 2: 76.0887 -0 
@@ -619,40 +651,7 @@
 ## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
 ## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
 ## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0x575c1813
-## Variable types: 0 continuous, 1192 integer (1192 binary)
-## Coefficient statistics:
-##   Matrix range     [1e-05, 2e+02]
-##   Objective range  [7e-08, 1e+01]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [9e+03, 9e+03]
-## Found heuristic solution: objective -0.0000000
-## Presolve removed 0 rows and 143 columns
-## Presolve time: 0.02s
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## Variable types: 0 continuous, 1049 integer (1049 binary)
-## Presolved: 63 rows, 1049 columns, 3152 nonzeros
-## 
-## 
-## Root relaxation: objective 1.319894e+02, 64 iterations, 0.00 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0  131.98943    0   51   -0.00000  131.98943      -     -    0s
-## H    0     0                      90.5592497  131.98943  45.7%     -    0s
-## 
-## Explored 1 nodes (64 simplex iterations) in 0.03 seconds
-## Thread count was 1 (of 8 available processors)
-## 
-## Solution count 2: 90.5592 -0 
-## 
-## Optimal solution found (tolerance 1.00e+01)
-## Best objective 9.055924970819e+01, best bound 1.319894283828e+02, gap 45.7493%
-## Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (mac64)
-## Thread count: 4 physical cores, 8 logical processors, using up to 1 threads
-## Optimize a model with 63 rows, 1192 columns and 3308 nonzeros
-## Model fingerprint: 0x2854a4b5
+## Model fingerprint: 0xfb908614
 ## Variable types: 0 continuous, 1192 integer (1192 binary)
 ## Coefficient statistics:
 ##   Matrix range     [1e-05, 2e+02]
@@ -672,16 +671,16 @@
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  131.98943    0   51   -0.00000  131.98943      -     -    0s
-## H    0     0                      87.4977361  131.98943  50.8%     -    0s
+##      0     0  131.98943    0   50   -0.00000  131.98943      -     -    0s
+## H    0     0                      81.7197901  131.98943  61.5%     -    0s
 ## 
-## Explored 1 nodes (63 simplex iterations) in 0.03 seconds
+## Explored 1 nodes (63 simplex iterations) in 0.02 seconds
 ## Thread count was 1 (of 8 available processors)
 ## 
-## Solution count 2: 87.4977 -0 
+## Solution count 2: 81.7198 -0 
 ## 
 ## Optimal solution found (tolerance 1.00e+01)
-## Best objective 8.749773609635e+01, best bound 1.319894285790e+02, gap 50.8490%</code></pre>
+## Best objective 8.171979010643e+01, best bound 1.319894282163e+02, gap 61.5146%</code></pre>
 <div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print solution</span>
 <span class="fu"><a href="https://prioritizr.net/reference/print.html">print</a></span><span class="op">(</span><span class="va">s8</span><span class="op">)</span></code></pre></div>
@@ -700,16 +699,16 @@
 <div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the cost of the second solution</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">s8</span><span class="op">$</span><span class="va">solution_2</span> <span class="op">*</span> <span class="va">s8</span><span class="op">$</span><span class="va">cost</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 571.3761</code></pre>
+<pre><code>## [1] 686.5616</code></pre>
 <div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate the proportion of planning units with the same solution values</span>
 <span class="co"># in the first and second solutions</span>
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">s8</span><span class="op">$</span><span class="va">solution_1</span> <span class="op">==</span> <span class="va">s8</span><span class="op">$</span><span class="va">solution_2</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 0.9938053</code></pre>
+<pre><code>## [1] 0.9964602</code></pre>
 <div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot first solution</span>
 <span class="fu">plot_solution</span><span class="op">(</span><span class="va">s8</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-81-1.png" width="65%"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-82-1.png" width="65%" style="display: block; margin: auto;"></div>
 <div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot all solutions</span>
 <span class="co"># s8_plots &lt;- lapply(paste0("solution_", seq_len(6)), function(x) {</span>
@@ -726,7 +725,7 @@
 
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="va">s8</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"solution_1"</span>, <span class="st">"solution_2"</span>, <span class="st">"solution_3"</span>, <span class="st">"solution_4"</span>, <span class="st">"solution_5"</span>, <span class="st">"solution_6"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,
   pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey90"</span>, <span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-82-1.png" width="768"></div>
+<div class="inline-figure"><img src="SpatialPlanning_Workshop2021_files/figure-html/unnamed-chunk-83-1.png" width="768" style="display: block; margin: auto;"></div>
 
 <div class="rmdquestion">
 <ol style="list-style-type: decimal">
@@ -767,7 +766,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>2021 UQ Spatial Planning Workshop using Prioritizr</strong>" was written by Jason D. Everett, Isaac Brito-Morales. It was last built on 2021-02-08.</p>
+    <p>"<strong>2021 UQ Spatial Planning Workshop using Prioritizr</strong>" was written by Jason D. Everett, Isaac Brito-Morales. It was last built on 2021-02-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

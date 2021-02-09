@@ -2,7 +2,8 @@
 
 The aim of this tutorial is to provide a worked example of how vector-based data can be used to develop conservation prioritizations using the _prioritizr R_ package. The dataset used in this tutorial was originally a subset of a larger spatial prioritization project performed under contract to Australia's Department of Environment and Water Resources [@r30].
 
-This dataset contains two items.     
+This dataset contains two items.
+
 * First, a spatial planning unit layer that has an attribute table which contains three columns: integer unique identifiers ("id"), unimproved land values ("cost"), and their existing level of protection ("status"). Units with 50 % or more of their area contained in protected areas are associated with a status of 2, otherwise they are associated with a value of 0. 
 
 * The second item in this dataset is the raster-based feature data. Specifically, the feature data is expressed as a stack of rasters (termed a `RasterStack` object). Here each layer in the stack represents the distribution of a different vegetation class in Tasmania, Australia. There are 62 vegetation classes in total. For a given layer, pixel values indicate the presence (value of 1) or absence (value of 0) of the vegetation class in an area.
@@ -39,8 +40,8 @@ albers <- "+proj=aea +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=132 +x_0=0 +y_0=0 +el
 
 tas_pu <- readOGR("data/pu.shp")
 tas_features <- stack("data/vegetation.tif")
-proj4string(tas_pu) <- albers # There is a problem with projectio so we re-add it here
-proj4string(tas_features) <- albers # There is a problem with projectio so we re-add it here
+proj4string(tas_pu) <- albers # There is a problem with projection so we re-add it here
+proj4string(tas_features) <- albers # There is a problem with projection so we re-add it here
 
 tas_pu$locked_out[1:500] <- FALSE # There is a problem later on so we remove some of the locked out areas to improve chance of a solution
 tas_pu$locked_in <- as.logical(tas_pu$locked_in) # Convert to logical
@@ -52,6 +53,9 @@ plot_solution <- function(s){
   plot(st_as_sf(s[, "solution_1"]), pal = c("grey90", "darkgreen"), main = "Solution 1")
 }
 
+tas_sum <- raster::calc(tas_features, sum, na.rm = TRUE)
+
+plot(tas_sum)
 ```
 
 \clearpage
