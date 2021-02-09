@@ -53,9 +53,6 @@ plot_solution <- function(s){
   plot(st_as_sf(s[, "solution_1"]), pal = c("grey90", "darkgreen"), main = "Solution 1")
 }
 
-tas_sum <- raster::calc(tas_features, sum, na.rm = TRUE)
-
-plot(tas_sum)
 ```
 
 \clearpage
