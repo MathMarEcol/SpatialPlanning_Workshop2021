@@ -366,7 +366,6 @@ s8$solution_6 <- factor(s8$solution_6)
 plot(st_as_sf(s8[, c("solution_1", "solution_2", "solution_3", "solution_4", "solution_5", "solution_6")]),
   pal = c("grey90", "darkgreen"))
 
-
 ```
 
 ```{block2, type="rmdquestion", warning = FALSE}
