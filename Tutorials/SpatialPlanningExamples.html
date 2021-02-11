@@ -396,14 +396,14 @@ summary {
 <p>This document will contain some examples of Spatial Planning in Prioritiser.</p>
 <div id="generating-planning-units" class="section level1">
 <h1>Generating Planning Units</h1>
-<p>Load the relevant libraries and source the <code>SthnOcean_HelpR.R</code> file you can download from <a href="https://raw.githubusercontent.com/MathMarEcol/SpatialPlanning_SthnOcean/master/SthnOcean_HelpR.R?token=ABSWJ5CRQ2T3HOBUVBZ46VDAFXP5Q">here</a></p>
+<p>Load the relevant libraries and source the <code>fCreate_PlanningUnits.R</code> file from the Tutorials directory in the <a href="https://github.com/MathMarEcol/SpatialPlanning_Workshop2021">workshop repository</a>.</p>
 <pre class="r"><code>suppressPackageStartupMessages({
   library(tidyverse)
   library(rnaturalearth)
   library(sf)
 })
 
-source(&quot;SthnOcean_HelpR.R&quot;)</code></pre>
+source(&quot;fCreate_PlanningUnits.R&quot;)</code></pre>
 <p>First we need to create a polygon of the study site area. This is used as the boundaries of the planning unit generation. The CRS needs to have units of m’s but it is often easier to generate the limits based on degrees, so here we first create the polygon with degrees, and then we convert to a different crs with m’s.</p>
 <pre class="r"><code># Create a polygon for the boundary of your study area
 Bndry &lt;- tibble(x = seq(140, 160, by = 1), y = -20) %&gt;%

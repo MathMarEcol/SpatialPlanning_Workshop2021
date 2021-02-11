@@ -13,7 +13,7 @@ This document will contain some examples of Spatial Planning in Prioritiser.
 
 # Generating Planning Units
 
-Load the relevant libraries and source the `fCreate_PlanningUnits.R` file from the Tutorials directory in the workshop repository.
+Load the relevant libraries and source the `fCreate_PlanningUnits.R` file from the Tutorials directory in the [workshop repository](https://github.com/MathMarEcol/SpatialPlanning_Workshop2021).
 ```{r}
 suppressPackageStartupMessages({
   library(tidyverse)
