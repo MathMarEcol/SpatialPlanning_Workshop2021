@@ -18,8 +18,7 @@ Load the relevant libraries and source the `fCreate_PlanningUnits.R` file from t
 suppressPackageStartupMessages({
   library(tidyverse)
   library(rnaturalearth)
-  library(sf)
-})
+  library(sf)})
 
 source("fCreate_PlanningUnits.R")
 ```
@@ -27,23 +26,23 @@ source("fCreate_PlanningUnits.R")
 First we need to create a polygon of the study site area. This is used as the boundaries of the planning unit generation. The CRS needs to have units of m's but it is often easier to generate the limits based on degrees, so here we first create the polygon with degrees, and then we convert to a different crs with m's.
 
 ```{r}
-# Create a polygon for the boundary of your study area
-Bndry <- tibble(x = seq(140, 160, by = 1), y = -20) %>%
-  bind_rows(tibble(x = 160, y = seq(-20, -40, by = -1))) %>%
-  bind_rows(tibble(x = seq(160, 140, by = -1), y = -40)) %>%
-  bind_rows(tibble(x = 140, y = seq(-40, -20, by = 1))) %>%
+# Create a polygon for the boundary of your study area - The polygon must be continuous from one corner all the way around and back to the same corner.
+Bndry <- tibble(x = seq(140, 160, by = 1), y = -20) %>% # Start with N boundary (-20N)
+  bind_rows(tibble(x = 160, y = seq(-20, -40, by = -1))) %>% # Then bind to E boundary (160E)
+  bind_rows(tibble(x = seq(160, 140, by = -1), y = -40)) %>% # Then S boundary (-40N) - reverse y order
+  bind_rows(tibble(x = 140, y = seq(-40, -20, by = 1))) %>% # Then W boundary (140E) - reverse x order
   as.matrix() %>%
   list() %>%
   st_polygon() %>%
-  st_sfc(crs = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0") %>%
-  st_transform(crs = "+proj=utm +zone=56 +south +datum=WGS84 +units=m +no_defs") # Transform to m
+  st_sfc(crs = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0") %>% # Current crs
+  st_transform(crs = "+proj=utm +zone=56 +south +datum=WGS84 +units=m +no_defs") # Transform crs to m
 ```
 
 Most study areas will contain land or areas we don't want to consider. One way to remove these is to provide an `sf` object which has polygons of landmasses, ice shelves or EEZ/ABNJ areas to be excluded. The crs of this object should be the same as the `Bndry`.
 ```{r}
-# Get a polygon for the landmass
-LandMass <- ne_countries(country = "Australia", returnclass = "sf", scale = "medium") %>%
-  st_transform(crs = "+proj=utm +zone=56 +south +datum=WGS84 +units=m +no_defs") # Transform to m
+# Get a polygon for the landmass from rnaturalearth
+LandMass <- ne_countries(country = "Australia", returnclass = "sf", scale = "medium") %>% # Load Landmass
+  st_transform(crs = "+proj=utm +zone=56 +south +datum=WGS84 +units=m +no_defs") # Transform crs to m
 ```
 
 Lets plot the two polygons to ensure they line up ok.
@@ -56,8 +55,8 @@ ggplot() +
 
 Now we define the spatial area of the planning units (in kms), and the `Shape` (`Hexagon` or `Square`).
 ```{r}
-CellArea <- 1000
-Shape = "Hexagon"
+CellArea <- 1000 # kms2
+Shape = "Hexagon" # Hexagon or Square
 
 ```
 
@@ -77,8 +76,8 @@ ggplot() +
 ```
 
 If you are happy with the PU's, you can save them for use later.
-
 ```{r}
-st_write(PUsAus, dsn = ".", layer = paste0("PUs_",CellArea,"km2"), driver = "ESRI Shapefile", append = FALSE)
+st_write(PUsAus, dsn = ".", layer = paste0("PUs_",CellArea,"km2"), driver = "ESRI Shapefile", append = FALSE) # 
 ```
 
+You can then use `st_read` to load it again.
