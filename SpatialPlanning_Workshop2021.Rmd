@@ -1,0 +1,231 @@
+--- 
+title: "2021 UQ Spatial Planning Workshop using Prioritizr"
+author: "Jason D. Everett, Isaac Brito-Morales"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: references.bib
+csl: reference-style.csl
+biblio-style: apalike
+link-citations: yes
+description: "Notes for the 2021 UQ Spatial Planning Workshop using Prioritizr."
+url: "https://mathmarecol.github.io/SpatialPlanning_Workshop2021/"
+github-repo: MathMarEcol/SpatialPlanning_Workshop2021
+fontsize: 12pt
+urlcolor: blue
+geometry: "left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm"
+---
+--- 
+title: "2021 UQ Spatial Planning Workshop using Prioritizr"
+author: "Jason D. Everett, Isaac Brito-Morales"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: references.bib
+csl: reference-style.csl
+biblio-style: apalike
+link-citations: yes
+description: "Notes for the 2021 UQ Spatial Planning Workshop using Prioritizr."
+url: "https://mathmarecol.github.io/SpatialPlanning_Workshop2021/"
+github-repo: MathMarEcol/SpatialPlanning_Workshop2021
+fontsize: 12pt
+urlcolor: blue
+geometry: "left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm"
+---
+
+# Welcome!
+
+The aim of this workshop is to help you get started with using the prioritizr R package for systematic conservation planning. It is not designed to give you a comprehensive overview and you will not become an expert after completing this workshop. Instead, we want to help you understand the core principles of conservation planning and guide you through some of the common tasks involved with developing prioritizations. In other words, we want to give you the knowledge base and confidence needed to start applying systematic conservation planning to your own work.
+
+The workshop will run 6-9 am (Brisbane Time) on Tuesday 9th and Wednesday 10th February 20201 to accommodate our European friends. The rough plan for the workshop is to cover Chapters 1-3 on Day 1, and Chapters 4-5 on Day 2. We hope this will leave lots of time for discussion.
+
+<!--chapter:end:index.Rmd-->
+
+
+# Setting up your computer {#setup}
+
+Placeholder
+
+
+## R {#r}
+## RStudio {#rstudio}
+## R packages {#r-packages}
+## Optimisation Software
+### Obtaining a license
+### Downloading the _Gurobi_ software suite
+### Software installation
+### License activation
+### Local license activation
+### Install gurobi R
+## Test your install
+
+<!--chapter:end:01-Preparation.Rmd-->
+
+
+# Overview of the conservation planning problem
+
+Placeholder
+
+
+## Summary
+## Introduction
+### Overall Concepts
+### Choosing Marine Reserves: The C.A.R.E. Approach
+### The Optimisation Problem
+
+<!--chapter:end:02-ConservationPlanning.Rmd-->
+
+
+# Getting Started with Prioritizr
+
+Placeholder
+
+
+## Package overview
+## Package work flow
+### Objectives
+### Penaltes and Constraints
+## Usage
+### Simulated Data
+### Initialize a problem
+### Add an objective
+### Add targets
+### Add constraints
+### Add penalties
+### Add the decision types
+### Add a solver
+### Add a portfolio
+### Solve the problem
+### Evaluate the performance of a solution
+### Importance (irreplaceability)
+
+<!--chapter:end:03-GettingStartedPrioritizr.Rmd-->
+
+
+# Spatial Data {#data}
+
+Placeholder
+
+
+## Data import
+## Planning unit data
+## Vegetation data
+
+<!--chapter:end:04-Data.Rmd-->
+
+
+# Spatial prioritizations {#spatial-prioritizations}
+
+Placeholder
+
+
+## Introduction
+## Starting out simple
+## Adding complexity
+## Penalizing fragmentation
+## Budget limited prioritizations
+## Solution portfolios
+
+<!--chapter:end:05-Prioritizations.Rmd-->
+
+# Acknowledgements
+
+Many thanks to the [Prioritizr Team](https://prioritizr.net/articles/prioritizr.html) for the development of this software, and for providing the source code for their own workshops so we could more easily develop this one.
+
+Also to Yihui Xie for developing the [bookdown R package](http://bookdown.org) that underpins these notes. We also thank Garrett Grolemund and Hadley Wickham for creating one of the Rstudio screenshots used in this manual that was originally a part of their _R for Data Science_ book.
+
+<!--chapter:end:06-Acknowledgements.Rmd-->
+
+`r if (knitr::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:07-References.Rmd-->
+
+---
+title: "Spatial Planning Examples"
+author: "Jason D. Everett (UQ/UNSW/CSIRO)"
+date: "11/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document will contain some examples of Spatial Planning in Prioritiser.
+
+# Generating Planning Units
+
+Load the relevant libraries and source the `fCreate_PlanningUnits.R` file you can download from [here](https://raw.githubusercontent.com/MathMarEcol/SpatialPlanning_Workshop2021)
+```{r}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(rnaturalearth)
+  library(sf)
+})
+
+source("fCreate_PlanningUnits")
+```
+
+First we need to create a polygon of the study site area. This is used as the boundaries of the planning unit generation. The CRS needs to have units of m's but it is often easier to generate the limits based on degrees, so here we first create the polygon with degrees, and then we convert to a different crs with m's.
+
+```{r}
+# Create a polygon for the boundary of your study area
+Bndry <- tibble(x = seq(140, 160, by = 1), y = -20) %>%
+  bind_rows(tibble(x = 160, y = seq(-20, -40, by = -1))) %>%
+  bind_rows(tibble(x = seq(160, 140, by = -1), y = -40)) %>%
+  bind_rows(tibble(x = 140, y = seq(-40, -20, by = 1))) %>%
+  as.matrix() %>%
+  list() %>%
+  st_polygon() %>%
+  st_sfc(crs = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0") %>%
+  st_transform(crs = "+proj=utm +zone=56 +south +datum=WGS84 +units=m +no_defs") # Transform to m
+```
+
+Most study areas will contain land or areas we don't want to consider. One way to remove these is to provide an `sf` object which has polygons of landmasses, ice shelves or EEZ/ABNJ areas to be excluded. The crs of this object should be the same as the `Bndry`.
+```{r}
+# Get a polygon for the landmass
+LandMass <- ne_countries(country = "Australia", returnclass = "sf", scale = "medium") %>%
+  st_transform(crs = "+proj=utm +zone=56 +south +datum=WGS84 +units=m +no_defs") # Transform to m
+```
+
+Lets plot the two polygons to ensure they line up ok.
+```{r}
+ggplot() +
+  geom_sf(data = LandMass, colour = "red", fill = NA, size = 0.2, show.legend = "line") +
+  geom_sf(data = Bndry, colour = "black", fill = NA, size = 0.3, show.legend = "line")
+```
+
+
+Now we define the spatial area of the planning units (in kms), and the `Shape` (`Hexagon` or `Square`).
+```{r}
+CellArea <- 1000
+Shape = "Hexagon"
+
+```
+
+This is a function that I wrote which takes all these inputs and returns an sf object containing the PUs with the excluded area.
+```{r}
+PUsAus <- fCreate_PlanningUnits(Bndry, LandMass, CellArea, Shape)
+```
+
+Now plot it to check the output
+```{r}
+ggplot() +
+  geom_sf(data = LandMass, colour = "red", fill = NA, size = 0.2, show.legend = "line") +
+  geom_sf(data = PUsAus, colour = "black", fill = NA, size = 0.1, show.legend = "line") + 
+  coord_sf(xlim = c(st_bbox(Bndry)$xmin, st_bbox(Bndry)$xmax), # Set limits based on Bndry bbox
+           ylim = c(st_bbox(Bndry)$ymin, st_bbox(Bndry)$ymax),
+           expand = TRUE) 
+```
+
+If you are happy with the PU's, you can save them for use later.
+
+```{r}
+st_write(PUsAus, dsn = ".", layer = paste0("PUs_",CellArea,"km2"), driver = "ESRI Shapefile", append = FALSE)
+```
+
+
+<!--chapter:end:SpatialPlanningExamples.Rmd-->
+
