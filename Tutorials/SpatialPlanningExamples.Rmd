@@ -13,7 +13,7 @@ This document will contain some examples of Spatial Planning in Prioritiser.
 
 # Generating Planning Units
 
-Load the relevant libraries and source the `fCreate_PlanningUnits.R` file you can download from [here](https://raw.githubusercontent.com/MathMarEcol/SpatialPlanning_Workshop2021)
+Load the relevant libraries and source the `fCreate_PlanningUnits.R` file from the Tutorials directory in the workshop repository.
 ```{r}
 suppressPackageStartupMessages({
   library(tidyverse)
@@ -21,7 +21,7 @@ suppressPackageStartupMessages({
   library(sf)
 })
 
-source("fCreate_PlanningUnits")
+source("fCreate_PlanningUnits.R")
 ```
 
 First we need to create a polygon of the study site area. This is used as the boundaries of the planning unit generation. The CRS needs to have units of m's but it is often easier to generate the limits based on degrees, so here we first create the polygon with degrees, and then we convert to a different crs with m's.

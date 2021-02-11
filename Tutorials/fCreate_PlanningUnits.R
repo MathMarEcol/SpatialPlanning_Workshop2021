@@ -1,5 +1,4 @@
 
-
 # Function to create square or heaxagonal planning units for your area of interest.
 # Inputs needed are:
 #   Bndry: An sf polygon object which outlines the limits of the study area.
